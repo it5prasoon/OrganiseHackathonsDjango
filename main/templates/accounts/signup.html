@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load crispy_forms_filters %}
 {% load static %}
 {% load crispy_forms_tags %}
 {% block metadescription %}
 	Sign up to get a new account with us.
 {% endblock %}
 {% block title %}
-	Create a New Account - IIIT STORE
+	Create a New Account
 {% endblock %}
 {% block content %}
 	<div>
@@ -37,7 +38,7 @@
 						<br>
 						Your account has been created and it is ready to use.
 						<br>
-						<a href="{% url 'store:allProdcat' %}">Continue shopping</a>
+						<a href="{% url 'main:allProdcat' %}">Continue to Login</a>
 					</p>
 				</div>
 			</div>

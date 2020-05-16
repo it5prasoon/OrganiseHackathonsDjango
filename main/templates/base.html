@@ -111,8 +111,8 @@
     <!--header-->
     <header>
         <center>
-            <a href="{% url 'main:allProdcat' %}"><img class="my_logo" src="{% static 'img/logo.jpg' %}"
-                                                       alt="Hoodie For Sale"></a>
+            <a href="{% url 'main:allProdcat' %}"><img class="my_logo" src="{% static 'img/logo1.jpg' %}"
+                                                       alt="Choose your List"></a>
         </center>
     </header>
     <!-- Top Nav-->
@@ -154,16 +154,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item dropdown {% if 'main' in request.path %} active {% endif %}">
-                    <a class="dropdown-item" href="{% url 'main:allProdcat' %}">Home</a>
-                    {#                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"#}
-                    {#                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
-                    {#                        Menu#}
-                    {#                    </a>#}
-                    {#                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">#}
-                    {#                        {% for cat in links %}#}
-                    {#                            <a class="dropdown-item" href="{{ cat.get_url }}">{{ cat.name }}</a>#}
-                    {#                        {% endfor %}#}
-                    {#                    </div>#}
+                        <a class="dropdown-item" href="{% url 'main:allProdcat' %}">Home</a>
+{#                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"#}
+{#                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
+{#                        Menu#}
+{#                    </a>#}
+{#                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">#}
+{#                        {% for cat in links %}#}
+{#                            <a class="dropdown-item" href="{{ cat.get_url }}">{{ cat.name }}</a>#}
+{#                        {% endfor %}#}
+{#                    </div>#}
                 </li>
             </ul>
         </div>

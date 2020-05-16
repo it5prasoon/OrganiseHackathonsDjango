@@ -1,12 +1,17 @@
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.shortcuts import render
 
 from .forms import SignUpForm
 from .models import Category, List
 
+
+def index(request):
+    text_bar = 'A Event Organiser Specially for hackathons'
+    return HttpResponse(text_bar)
 
 def allProdcat(request, c_slug=None):
     c_page = None
@@ -51,7 +56,7 @@ def signinView(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('store:allProdcat')
+                return redirect('main:allProdcat')
             else:
                 return redirect('signup')
     else:
