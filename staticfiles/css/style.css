@@ -81,9 +81,19 @@ body {
 }
 
 .new5 {
-  border: 10px solid lightblue;
+  border: 2px solid slategray;
   border-radius: 5px;
 }
+
+* {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
 /****Product Page****/
 .my_prod_row_class {
 	padding-top: 15px;

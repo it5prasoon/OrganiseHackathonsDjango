@@ -7,10 +7,102 @@
     <meta name="description" content="{% block metadescription %} {% endblock %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/w3.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'fonts/fontawesome-all.min.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: Verdana, sans-serif;
+        }
+
+        .mySlides {
+            display: none;
+        }
+
+        img {
+            vertical-align: middle;
+        }
+
+        /* Slideshow container */
+        .slideshow-container {
+            max-width: 1000px;
+            position: relative;
+            margin: auto;
+        }
+
+        /* Caption text */
+        .text {
+            color: #f2f2f2;
+            font-size: 15px;
+            padding: 8px 12px;
+            position: absolute;
+            bottom: 8px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Number text (1/3 etc) */
+        .numbertext {
+            color: #f2f2f2;
+            font-size: 12px;
+            padding: 8px 12px;
+            position: absolute;
+            top: 0;
+        }
+
+        /* The dots/bullets/indicators */
+        .dot {
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .active {
+            background-color: #717171;
+        }
+
+        /* Fading animation */
+        .fade {
+            -webkit-animation-name: fade;
+            -webkit-animation-duration: 1.5s;
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+
+        @-webkit-keyframes fade {
+            from {
+                opacity: .4
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes fade {
+            from {
+                opacity: .4
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        /* On smaller screens, decrease text size */
+        @media only screen and (max-width: 300px) {
+            .text {
+                font-size: 11px
+            }
+        }
+    </style>
 
     <title>{% block title %} {% endblock %}</title>
 </head>
@@ -20,35 +112,37 @@
     <header>
         <center>
             <a href="{% url 'main:allProdcat' %}"><img class="my_logo" src="{% static 'img/logo.jpg' %}"
-                                                        alt="Hoodie For Sale"></a>
+                                                       alt="Hoodie For Sale"></a>
         </center>
     </header>
-<!-- Top Nav-->
+    <!-- Top Nav-->
     <div class="container-fluid bg-secondary navbar-fixed-top my_top_navbar_div">
-			<div class="container">
-	<div class="my_custom_menu">
-		<ul>
-			{% if request.user.is_authenticated and request.user.first_name %}
-			<li>
-				Welcome, <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ request.user.first_name }} <i class="fas fa-user-circle"></i></a>
-			</li>
-			<li>
-				<a href="{% url 'signout' %}">Sign Out</a>
-			</li>
-			{% else %}
-			<li>
-				<a href="{% url 'signup' %}">Sign Up</a>
-			</li>
-			<li>
-				<a href="{% url 'signin' %}">Sign In </a>
-			</li>
-			{% endif %}
-		</ul>
+        <div class="container">
+            <div class="my_custom_menu">
+                <ul>
+                    {% if request.user.is_authenticated and request.user.first_name %}
+                        <li>
+                            Welcome, <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">{{ request.user.first_name }} <i
+                                class="fas fa-user-circle"></i></a>
+                        </li>
+                        <li>
+                            <a href="{% url 'signout' %}">Sign Out</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="{% url 'signup' %}">Sign Up</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'signin' %}">Sign In </a>
+                        </li>
+                    {% endif %}
+                </ul>
 
-	</div>
-</div>
-		</div>
-<!-- Top Nav-->
+            </div>
+        </div>
+    </div>
+    <!-- Top Nav-->
 
     <!-- nav bar-->
     <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
@@ -61,15 +155,15 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item dropdown {% if 'main' in request.path %} active {% endif %}">
                     <a class="dropdown-item" href="{% url 'main:allProdcat' %}">Home</a>
-{#                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"#}
-{#                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
-{#                        Menu#}
-{#                    </a>#}
-{#                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">#}
-{#                        {% for cat in links %}#}
-{#                            <a class="dropdown-item" href="{{ cat.get_url }}">{{ cat.name }}</a>#}
-{#                        {% endfor %}#}
-{#                    </div>#}
+                    {#                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"#}
+                    {#                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
+                    {#                        Menu#}
+                    {#                    </a>#}
+                    {#                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">#}
+                    {#                        {% for cat in links %}#}
+                    {#                            <a class="dropdown-item" href="{{ cat.get_url }}">{{ cat.name }}</a>#}
+                    {#                        {% endfor %}#}
+                    {#                    </div>#}
                 </li>
             </ul>
         </div>
