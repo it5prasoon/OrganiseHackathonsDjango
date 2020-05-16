@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+    {{ list.description|truncatewords:155 }}
+{% endblock %}
+{% block title %}
+    {{ list.name }} - Hackathon Website
+{% endblock %}
+
+{% block content %}
+    <div class="row my_prod_row_class">
+        <div class="mx-auto">
+            <p><a href="{% url 'main:allProdcat' %}"><b>Home</b></a> <b>| {{ list.name }}</b> </p>
+        </div>
+        <div class="container">
+            <br>
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+                    <div style="min-width:17rem;">
+                        <img class="my_prod_image" src="{{ list.image.url }}" alt="{{ list.name }}">
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                    <div>
+                        <h1 class="my_prod_title">{{ list.name }}</h1>
+                        <p>Registered: {{ list.registered }}</p>
+                        <p><mark>Days Left: {{ list.noofdays }}</mark></p>
+                        <form method="POST">
+                        {% csrf_token %}
+                        {% if list.variation_set.all %}
+                            {% if list.variation_set.sizes %}
+
+                                <select class="form-control" name="size">
+                                    {% for item in list.variation_set.sizes %}
+                                        <option value="{{ item.title|lower }}">{{ item.title|capfirst }}</option>
+                                    {% endfor %}
+                                </select>
+                            {% endif %}
+                            {% if list.variation_set.colors %}
+                                <select class="form-control" name="color">
+                                    {% for item in list.variation_set.colors %}
+                                        <option value="{{ item.title|lower }}">{{ item.title|capfirst }}</option>
+                                    {% endfor %}
+                                </select>
+                                {% endif %}
+                        {% endif %}
+                        </form>
+                        <p class="text-justify my_prod_text">Description: {{ list.description }}</p><br>
+
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

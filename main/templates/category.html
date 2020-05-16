@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+{% block metadescription %}
+    {% if category %}
+        {{ category.description| truncatewords:"155" }}
+    {% else %}
+        Welcome To the site where you can search for hackathons conducting all over country.
+    {% endif %}
+{% endblock %}
+{% block title %}
+    {% if category %}
+        {{ category.name }} - Hackathon List
+    {% else %}
+        See the list.
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <!--Breadcrumb navigation-->
+    {% if category %}
+        <div class="row my_row_class">
+            <div class="mx-auto">
+                <p><a href="{% url 'main:allProdcat' %}">Our list</a> | {{ category.name }}</p>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="mx-auto">
+        {% if category %}
+            <img class="my_image1" src="{{ category.image.url }}" alt="{{ category.name }}">
+            </div>
+            <br>
+            <div>
+                <h1 class="text-center my_title">{{ category.name }}</h1>
+                <p class="text-justify">{{ category.description }}</p>
+            </div>
+        {% else %}
+            <img class="my_image my_image_padding" src="{% static 'img/slide1.jpg' %}" alt="Our list">
+        {% endif %}
+    <hr class="new5">
+    <div class="container">
+        <div class="row mx-auto">
+            {% for list in lists %}
+                <div class="my_bottom_margin col-9 col-sm-12 col-md-4 col-md-12 col-lg-4">
+                    <div class="card text-center" style="min-width: 17rem;">
+                        <a href="{{ list.get_url }}"><img class="card-img-top my_image" src="{{ list.image.url }}" alt="{{ list.name }}"></a>
+                        <div class="card-body">
+                            <h4>{{ list.name }}</h4>
+                            <p>Registered: {{ list.registered }} People</p>
+                            <p><mark>Registration Open</mark></p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
