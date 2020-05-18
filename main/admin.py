@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Category, List
+from .models import Category, List, Comment
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -20,6 +20,11 @@ class ListAdmin(admin.ModelAdmin):
     list_per_page = 10
 
 
+class CommentAdmin(admin.ModelAdmin):
+    model = Comment
+    list_display = ['subject', 'text', 'created_date']
+    randomly_fields = ['subject', 'text']
+
+
 admin.site.register(List, ListAdmin)
-
-
+admin.site.register(Comment, CommentAdmin)

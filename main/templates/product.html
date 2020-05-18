@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
+{% load crispy_forms_filters %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block metadescription %}
     {{ list.description|truncatewords:155 }}
 {% endblock %}
@@ -10,7 +12,7 @@
 {% block content %}
     <div class="row my_prod_row_class">
         <div class="mx-auto">
-            <p><a href="{% url 'main:allProdcat' %}"><b>Home</b></a> <b>| {{ list.name }}</b> </p>
+            <p><a href="{% url 'main:allProdcat' %}"><b>Home</b></a> <b>| {{ list.name }}</b></p>
         </div>
         <div class="container">
             <br>
@@ -24,13 +26,51 @@
                     <div>
                         <h1 class="my_prod_title">{{ list.name }}</h1>
                         <p>Registered: {{ list.registered }}</p>
-                        <p><mark>Days Left: {{ list.noofdays }}</mark></p>
+                        <p>
+                            <mark>Days Left: {{ list.noofdays }}</mark>
+                        </p>
                         <p class="text-justify my_prod_text">Description: {{ list.description }}</p><br>
-
                         <br>
+
                     </div>
                 </div>
             </div>
         </div>
+        <br>
+    </div>
+    <hr class="new5">
+    <div class="container">
+        <br>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ messege.tags }} " role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        Leave A Comment:
+        <form action="{% url 'main:addcomment' list.id %}" role="form" method="post" style="margin-top: 1.3em;">
+            {% csrf_token %}
+            <p>{{ form | crispy }}</p>
+            {% if user.id is not none %}
+                <button type="submit" class="btn btn-secondary bg-danger">Comment</button>
+            {% else %}
+                You must be logged in to post a review.
+            {% endif %}
+        </form>
+        <br>
+        {% for comment in list.comments.all reversed %}
+            <div class="comment">
+                <div class="date">{{ comment.created_date }}</div>
+                <strong>User: {{ comment.user }}</strong>
+                <p>Subject: {{ comment.subject }}</p>
+                <p>{{ comment.text|linebreaks }}</p>
+                <br>
+            </div>
+        {% empty %}
+            <p>No comments here yet :(</p>
+        {% endfor %}
     </div>
 {% endblock %}

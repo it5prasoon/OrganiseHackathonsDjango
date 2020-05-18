@@ -92,7 +92,9 @@ body {
     margin: 0;
     padding: 0;
 }
-
+.comment {
+            margin: 20px 0px 20px 20px;
+        }
 
 /****Product Page****/
 .my_prod_row_class {

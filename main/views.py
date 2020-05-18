@@ -1,17 +1,20 @@
+from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from django.shortcuts import render
+from django.urls import reverse
 
-from .forms import SignUpForm
-from .models import Category, List
+from .forms import SignUpForm, CommentForm
+from .models import Category, List, Comment
 
 
 def index(request):
     text_bar = 'A Event Organiser Specially for hackathons'
     return HttpResponse(text_bar)
+
 
 def allProdcat(request, c_slug=None):
     c_page = None
@@ -30,6 +33,24 @@ def hackathonList(request, c_slug, product_slug):
     except Exception as e:
         raise e
     return render(request, 'product.html', {'list': list})
+
+
+def addcomment(request, id):
+    list = get_object_or_404(List, pk=id)
+    form = CommentForm(request.POST or None)
+    if form.is_valid():
+        data = Comment()
+        data.subject = form.cleaned_data['subject']
+        data.text = form.cleaned_data['text']
+        print("Redirected.....")
+        current_user = request.user
+        data.user = current_user
+        data.post = list
+        data.user_id = current_user.id
+        data.save()
+        messages.success(request, "Your Comment has been sent. Thank you for your interest.")
+        return HttpResponseRedirect(reverse('main:addcomment', args=[list.id]))
+    return render(request, 'product.html', {'list': list, 'form': form})
 
 
 def signupView(request):

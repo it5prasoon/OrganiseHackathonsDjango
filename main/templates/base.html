@@ -107,7 +107,8 @@
     <title>{% block title %} {% endblock %}</title>
 </head>
 <body>
-<div class="container">
+<div class="bg-dark">
+<div class="container bg-light">
     <!--header-->
     <header>
         <center>
@@ -116,6 +117,7 @@
         </center>
     </header>
     <!-- Top Nav-->
+
     <div class="container-fluid bg-secondary navbar-fixed-top my_top_navbar_div">
         <div class="container">
             <div class="my_custom_menu">
@@ -154,16 +156,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item dropdown {% if 'main' in request.path %} active {% endif %}">
-                        <a class="dropdown-item" href="{% url 'main:allProdcat' %}">Home</a>
-{#                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"#}
-{#                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
-{#                        Menu#}
-{#                    </a>#}
-{#                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">#}
-{#                        {% for cat in links %}#}
-{#                            <a class="dropdown-item" href="{{ cat.get_url }}">{{ cat.name }}</a>#}
-{#                        {% endfor %}#}
-{#                    </div>#}
+                    <a class="dropdown-item" href="{% url 'main:allProdcat' %}">Home</a>
+                    {#                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"#}
+                    {#                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
+                    {#                        Menu#}
+                    {#                    </a>#}
+                    {#                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">#}
+                    {#                        {% for cat in links %}#}
+                    {#                            <a class="dropdown-item" href="{{ cat.get_url }}">{{ cat.name }}</a>#}
+                    {#                        {% endfor %}#}
+                    {#                    </div>#}
                 </li>
             </ul>
         </div>
@@ -178,11 +180,19 @@
         <p class="my_footer p">Made by Prasoon</p>
     </div>
 </div>
+</div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="{% static 'js/jquery-3.4.1.slim.min.js' %}"></script>
 <script src="{% static 'js/popper.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/browser.min.js' %}"></script>
+<script src="{% static 'js/breakpoints.min.js' %}"></script>
+<script src="{% static 'js/jquery.scrollex.min.js' %}"></script>
+<script src="{% static 'js/jquery.scrolly.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/util.js' %}"></script>
 
 </body>
 </html>
