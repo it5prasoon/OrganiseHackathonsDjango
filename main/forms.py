@@ -1,17 +1,11 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 
 from .models import Comment
 
 
 class SignUpForm(UserCreationForm):
-    first_name = forms.CharField(max_length=100, required=True)
-    last_name = forms.CharField(max_length=100, required=True)
-    institute_name = forms.CharField(max_length=100, required=True)
-    email = forms.EmailField(max_length=254, help_text='eg. youremail@mail.com')
-    registration_number = forms.CharField(max_length=100, required=True)
-
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email', 'username', 'password1', 'password2')
@@ -21,3 +15,19 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('subject', 'text')
+
+    widgets = {
+        'subject': forms.TextInput(attrs={'class': 'input', 'placeholder': 'Subject', 'cols': 100}),
+        'text': forms.Textarea(attrs={'class': 'input', 'cols': 100})
+
+    }
+
+
+class editProfileForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ('email',
+                  'first_name',
+                  'last_name',
+                  'password',
+                  )

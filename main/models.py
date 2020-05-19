@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.signals import post_save
 from django.urls import reverse
 from django.utils import timezone
 
@@ -32,6 +33,8 @@ class List(models.Model):
     image = models.ImageField(upload_to='product', blank=True)
     daysLeft = models.BooleanField(default=True)
     noofdays = models.DecimalField(max_digits=3, decimal_places=0)
+    WhoIsConducting = models.CharField(max_length=250)
+    question = models.FileField(upload_to='questions')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -58,3 +61,22 @@ class Comment(models.Model):
 
     def __str__(self):
         return str(self.user)
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    about = models.CharField(max_length=150, default='')
+    institute_name = models.CharField(max_length=100)
+    registration_number = models.CharField(max_length=100)
+    Address = models.CharField(max_length=100)
+    phone = models.CharField(max_length=10)
+    images = models.ImageField(upload_to='profileImage', blank=True)
+
+    def __str__(self):
+        return self.user.username
+
+
+def create_profile(sender, instance, **kwargs):
+    if kwargs['created']:
+        user_profile = UserProfile.objects.create(user=kwargs['instance'])
+    post_save.connect(create_profile(sender=User))

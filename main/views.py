@@ -1,19 +1,19 @@
 from django.contrib import messages
-from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.models import User
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .forms import SignUpForm, CommentForm
+from .forms import SignUpForm, CommentForm, editProfileForm
 from .models import Category, List, Comment
 
 
 def index(request):
-    text_bar = 'A Event Organiser Specially for hackathons'
-    return HttpResponse(text_bar)
+    return render(request, 'homepage.html')
+
 
 
 def allProdcat(request, c_slug=None):
@@ -85,6 +85,42 @@ def signinView(request):
     return render(request, 'accounts/signin.html', {'form': form})
 
 
+def profileView(request):
+    args = {'user': request.user}
+    return render(request, 'accounts/profile.html', args)
+
+
 def signoutView(request):
     logout(request)
     return redirect('signin')
+
+
+def editProfileView(request):
+    if request.method == 'POST':
+        form = editProfileForm(request.POST, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+
+    else:
+        form = editProfileForm(instance=request.user)
+        args = {'form': form}
+        return render(request, 'accounts/edit_profile.html', args)
+
+
+def changePassword(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(data=request.POST, user=request.user)
+
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            return redirect('profile')
+        else:
+            return redirect('changePassword')
+    else:
+        form = PasswordChangeForm(user=request.user)
+
+        args = {'form': form}
+        return render(request, 'accounts/changePassword.html', args)

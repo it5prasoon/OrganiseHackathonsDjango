@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block metadescription %}
+    See your info and change it.
+{% endblock %}
+{% block title %}
+    Profile
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <h1>Profile</h1>
+        <img src="{{ user.userprofile.images.url }}" alt="User" width="240">
+        <br>
+        <p>Username: {{ user }}</p>
+        <p>First Name: {{ user.first_name }}</p>
+        <p>Last Name: {{ user.last_name }}</p>
+        <p>Email: {{ user.email }}</p>
+        <p>Institute: {{ user.userprofile.institute_name }}</p>
+        <p>Registration Number: {{ user.userprofile.registration_number }}</p>
+        <p>Address: {{ user.userprofile.Address }}</p>
+        <p>Phone: {{ user.userprofile.phone }}</p>
+        <p>About: {{ user.userprofile.about }}</p>
+
+
+        <a href="{% url 'editProfile' %}" class="btn btn-secondary">Edit Profile</a>
+    </div>
+{% endblock %}

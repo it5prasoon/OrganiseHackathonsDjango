@@ -19,7 +19,9 @@
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
                     <div style="min-width:17rem;">
-                        <img class="my_prod_image" src="{{ list.image.url }}" alt="{{ list.name }}">
+                        <div class="inner">
+                            <img class="my_prod_image" src="{{ list.image.url }}" alt="{{ list.name }}">
+                        </div>
                     </div>
                 </div>
                 <div class="col-12 col-sm-12 col-md-12 col-lg-6">
@@ -30,8 +32,10 @@
                             <mark>Days Left: {{ list.noofdays }}</mark>
                         </p>
                         <p class="text-justify my_prod_text">Description: {{ list.description }}</p><br>
+                        <p class="text-justify my_prod_text">Conducting By: {{ list.WhoIsConducting }}</p>
+                        <p class="text-justify my_prod_text">Created at: {{ list.created }}</p>
+                        <a href="{{ list.question.url }}" class="btn btn-danger">Download the Info</a>
                         <br>
-
                     </div>
                 </div>
             </div>
@@ -44,30 +48,37 @@
         {% if messages %}
             <ul class="messages">
                 {% for message in messages %}
-                    <div class="alert alert-{{ messege.tags }} " role="alert">
+                    <div class="alert alert-success " role="alert">
                         {{ message }}
                     </div>
                 {% endfor %}
             </ul>
         {% endif %}
-        Leave A Comment:
+        <p class="alert alert-dark" role="alert"><strong>Leave A Comment:</strong></p>
         <form action="{% url 'main:addcomment' list.id %}" role="form" method="post" style="margin-top: 1.3em;">
             {% csrf_token %}
-            <p>{{ form | crispy }}</p>
+        <div class="jumbotron">
+            {{ form|crispy }}
+        </div>
             {% if user.id is not none %}
-                <button type="submit" class="btn btn-secondary bg-danger">Comment</button>
+                <button type="submit" class="btn btn-danger" data-toggle="button" aria-pressed="false"
+                        autocomplete="off">Comment
+                </button>
             {% else %}
-                You must be logged in to post a review.
+                <p class="alert alert-danger" role="alert">You must be logged in to post a review.</p>
             {% endif %}
         </form>
         <br>
         {% for comment in list.comments.all reversed %}
-            <div class="comment">
+            <div class="jumbotron comment">
                 <div class="date">{{ comment.created_date }}</div>
                 <strong>User: {{ comment.user }}</strong>
                 <p>Subject: {{ comment.subject }}</p>
                 <p>{{ comment.text|linebreaks }}</p>
                 <br>
+            </div>
+            <div class="comment">
+
             </div>
         {% empty %}
             <p>No comments here yet :(</p>

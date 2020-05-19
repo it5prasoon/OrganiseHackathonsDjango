@@ -107,80 +107,60 @@
     <title>{% block title %} {% endblock %}</title>
 </head>
 <body>
-<div class="bg-dark">
+{#<div class="bg-dark">#}
 <div class="container bg-light">
-    <!--header-->
-    <header>
-        <center>
-            <a href="{% url 'main:allProdcat' %}"><img class="my_logo" src="{% static 'img/logo1.jpg' %}"
-                                                       alt="Choose your List"></a>
-        </center>
-    </header>
-    <!-- Top Nav-->
 
-    <div class="container-fluid bg-secondary navbar-fixed-top my_top_navbar_div">
-        <div class="container">
-            <div class="my_custom_menu">
-                <ul>
-                    {% if request.user.is_authenticated and request.user.first_name %}
-                        <li>
-                            Welcome, <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">{{ request.user.first_name }} <i
-                                class="fas fa-user-circle"></i></a>
-                        </li>
-                        <li>
-                            <a href="{% url 'signout' %}">Sign Out</a>
-                        </li>
-                    {% else %}
-                        <li>
-                            <a href="{% url 'signup' %}">Sign Up</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'signin' %}">Sign In </a>
-                        </li>
-                    {% endif %}
-                </ul>
-
-            </div>
-        </div>
-    </div>
-    <!-- Top Nav-->
-
-    <!-- nav bar-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
+        <a class="navbar-brand" href="#">HORG</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navb"
+                aria-expanded="true">
             <span class="navbar-toggler-icon"></span>
         </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown {% if 'main' in request.path %} active {% endif %}">
-                    <a class="dropdown-item" href="{% url 'main:allProdcat' %}">Home</a>
-                    {#                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"#}
-                    {#                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
-                    {#                        Menu#}
-                    {#                    </a>#}
-                    {#                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">#}
-                    {#                        {% for cat in links %}#}
-                    {#                            <a class="dropdown-item" href="{{ cat.get_url }}">{{ cat.name }}</a>#}
-                    {#                        {% endfor %}#}
-                    {#                    </div>#}
+        <div id="navb" class="navbar-collapse collapse hide">
+            <ul class="navbar-nav">
+                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">Home</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:allProdcat' %}">Explore</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Page 2</a>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav ml-auto">
+                {% if request.user.is_authenticated and request.user.first_name %}
+                    <li>
+                        <a class="nav-link dropdown-toggle" href="{% url 'profile' %}">{{ request.user.first_name }}</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{% url 'signout' %}" aria-haspopup="true"
+                           aria-expanded="false">Sign Out</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signup' %}"> Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signin' %}">Login</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </nav>
+    <!-- Top Nav-->
 
-    <!-- nav bar -->
     {% block content %}
 
     {% endblock %}
     <!-- Footer -->
     <div class="my_footer bg-secondary">
-        <p class="my_footer p">Made by Prasoon</p>
+        <p class="my_footer p">Made for HACKOVID</p>
     </div>
 </div>
-</div>
+
+{#</div>#}
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="{% static 'js/jquery-3.4.1.slim.min.js' %}"></script>

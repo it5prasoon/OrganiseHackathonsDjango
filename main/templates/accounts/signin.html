@@ -16,13 +16,13 @@
 		<div class="row">
 			<div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center my_custom_div">
 				<br>
-				<h2 class="my_title">New Customer?</h2>
+				<h2 class="my_title">New User?</h2>
 				<a href="{% url 'signup' %}" class="btn btn-secondary">Create New Account</a>
 			</div>
 			<div class="col-12 col-sm-12 col-md-12 col-lg-6 bg-light">
 				<div>
 					<br>
-					<h2 class="my_title">Registered Customers Only</h2>
+					<h2 class="my_title">Registered Users Only</h2>
 					<form method="post">
 						{% csrf_token %}
 						<p>{{ form | crispy }}</p>
@@ -33,7 +33,6 @@
 				
 			</div>
 		</div>
-		<br>
+		 <br>
 	</div>
-	<br>
 {% endblock %}

@@ -2,7 +2,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-
 from main import views
 
 urlpatterns = [
@@ -12,6 +11,11 @@ urlpatterns = [
     path('account/create/', views.signupView, name='signup'),
     path('account/login/', views.signinView, name='signin'),
     path('account/logout/', views.signoutView, name='signout'),
+    path('account/profile/', views.profileView, name='profile'),
+    path('account/profile/edit/', views.editProfileView, name='editProfile'),
+    path('account/profile/password/', views.changePassword, name='changePassword'),
+
+
 ]
 
 if settings.DEBUG:

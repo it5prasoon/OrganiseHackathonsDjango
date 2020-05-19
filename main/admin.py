@@ -1,6 +1,8 @@
 from django.contrib import admin
 
-from .models import Category, List, Comment
+from .models import Category, List, Comment, UserProfile
+
+admin.site.site_header = 'HORG Administration'
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -13,11 +15,14 @@ admin.site.register(Category, CategoryAdmin)
 
 
 class ListAdmin(admin.ModelAdmin):
-    list_display = ['name', 'registered', 'daysLeft', 'created', 'updated', 'noofdays']
-    list_editable = ['daysLeft', 'noofdays']
+    list_display = ['name', 'registered', 'daysLeft', 'created', 'updated', 'noofdays', 'WhoIsConducting']
+    list_editable = ['daysLeft', 'noofdays', 'registered']
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
-    list_per_page = 10
+    list_per_page = 9
+
+
+admin.site.register(UserProfile)
 
 
 class CommentAdmin(admin.ModelAdmin):
