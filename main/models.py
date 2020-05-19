@@ -65,11 +65,11 @@ class Comment(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    about = models.CharField(max_length=150, default='')
+    about = models.CharField(max_length=150, default='', blank=True)
     institute_name = models.CharField(max_length=100)
     registration_number = models.CharField(max_length=100)
-    Address = models.CharField(max_length=100)
-    phone = models.CharField(max_length=10)
+    Address = models.CharField(max_length=100, blank=True)
+    phone = models.CharField(max_length=10, blank=True)
     images = models.ImageField(upload_to='profileImage', blank=True)
 
     def __str__(self):

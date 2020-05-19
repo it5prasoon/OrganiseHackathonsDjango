@@ -10,11 +10,13 @@ Change profile info.
 {% endblock %}
 {% block content %}
 	<div class="container">
-        <form method="post">
+        <form method="post" novalidate>
             {% csrf_token %}
             {{ form | crispy }}
+            {{ profile_form | crispy }}
             <button class="btn btn-secondary" type="submit">Submit</button>
         </form>
+
     <br>
     </div>
 {% endblock %}

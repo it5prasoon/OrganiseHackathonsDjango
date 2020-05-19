@@ -55,6 +55,8 @@
             </ul>
         {% endif %}
         <p class="alert alert-dark" role="alert"><strong>Leave A Comment:</strong></p>
+    <div class="row">
+    <div class="col-md-8">
         <form action="{% url 'main:addcomment' list.id %}" role="form" method="post" style="margin-top: 1.3em;">
             {% csrf_token %}
         <div class="jumbotron">
@@ -68,6 +70,8 @@
                 <p class="alert alert-danger" role="alert">You must be logged in to post a review.</p>
             {% endif %}
         </form>
+    </div>
+    </div>
         <br>
         {% for comment in list.comments.all reversed %}
             <div class="jumbotron comment">

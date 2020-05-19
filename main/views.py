@@ -7,13 +7,12 @@ from django.shortcuts import get_object_or_404, redirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .forms import SignUpForm, CommentForm, editProfileForm
+from .forms import SignUpForm, CommentForm, editProfileForm, ProfileForm
 from .models import Category, List, Comment
 
 
 def index(request):
     return render(request, 'homepage.html')
-
 
 
 def allProdcat(request, c_slug=None):
@@ -77,7 +76,7 @@ def signinView(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('main:allProdcat')
+                return redirect('index')
             else:
                 return redirect('signup')
     else:
@@ -98,14 +97,19 @@ def signoutView(request):
 def editProfileView(request):
     if request.method == 'POST':
         form = editProfileForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.userprofile)
 
-        if form.is_valid():
-            form.save()
+        if form.is_valid() and profile_form.is_valid():
+            user_form = form.save()
+            custom_form = profile_form.save(False)
+            custom_form.user = user_form
+            custom_form.save()
             return redirect('profile')
 
     else:
         form = editProfileForm(instance=request.user)
-        args = {'form': form}
+        profile_form = ProfileForm(instance=request.user.userprofile)
+        args = {'form': form, 'profile_form': profile_form}
         return render(request, 'accounts/edit_profile.html', args)
 
 
