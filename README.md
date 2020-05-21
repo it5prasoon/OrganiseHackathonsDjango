@@ -10,9 +10,8 @@ This is the Web app built using django==3.0.5 framework and python==3.7.1. You c
 5. Only registered users can comment on any event.
 
 # TODO
-1. To create Publish event app.
-2. To create register button and email sending after that.
-3. To create notifications app in which users can see the notifications. { Extra Not Necessary }
+1. To create notifications app in which users can see the notifications. { Extra Not Necessary }
+2. email sending after registration.
 
 
 Facts: It was really fun while working on this event. It has cleared many of my confusions about the particular framework. It was not so easy but not much tough.
