@@ -12,34 +12,51 @@
 {% block content %}
     <div class="row my_prod_row_class">
         <div class="mx-auto">
-            <p><a href="{% url 'main:allProdcat' %}"><b>Home</b></a> <b>| {{ list.name }}</b></p>
+            <p><a href="{% url 'index' %}"><b>Home</b></a> <b>| {{ list.name }}</b></p>
         </div>
         <div class="container">
             <br>
             <div class="row">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+                <div class=" text-center col-6 col-sm-6 col-md-6 col-lg-6">
                     <div style="min-width:17rem;">
                         <div class="inner">
                             <img class="my_prod_image" src="{{ list.image.url }}" alt="{{ list.name }}">
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
                     <div>
                         <h1 class="my_prod_title">{{ list.name }}</h1>
-                        <p>Registered: {{ list.registered }}</p>
                         <p>
                             <mark>Days Left: {{ list.noofdays }}</mark>
                         </p>
                         <p class="text-justify my_prod_text">Description: {{ list.description }}</p><br>
                         <p class="text-justify my_prod_text">Conducting By: {{ list.WhoIsConducting }}</p>
+                        <p class="text-justify my_prod_text">Author: {{ user.get_full_name }}</p>
                         <p class="text-justify my_prod_text">Created at: {{ list.created }}</p>
                         <a href="{{ list.question.url }}" class="btn btn-danger">Download the Info</a>
                         <br>
+                        <p>
+                        <form method="post" action="{% url 'register' %}" novalidate>
+                            {% csrf_token %}
+                            {% if is_registered %}
+                                <button class="btn btn-danger" type="submit" name="list_id" value="{{ list.id }}">
+                                    Unregister
+                                </button>
+                            {% else %}
+                                <button class="btn btn-danger" type="submit" name="list_id" value="{{ list.id }}">
+                                    Register
+                                </button>
+
+                            {% endif %}
+                        </form>
+                        </p>
+                    <p>Total registrations: {{ total_registered }}</p>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="col-12 col-lg-auto"></div>
         <br>
     </div>
     <hr class="new5">
@@ -55,23 +72,23 @@
             </ul>
         {% endif %}
         <p class="alert alert-dark" role="alert"><strong>Leave A Comment:</strong></p>
-    <div class="row">
-    <div class="col-md-8">
-        <form action="{% url 'main:addcomment' list.id %}" role="form" method="post" style="margin-top: 1.3em;">
-            {% csrf_token %}
-        <div class="jumbotron">
-            {{ form|crispy }}
+        <div class="row">
+            <div class="col-md-8">
+                <form action="{% url 'main:addcomment' list.id %}" role="form" method="post" style="margin-top: 1.3em;">
+                    {% csrf_token %}
+                    <div class="jumbotron">
+                        {{ form|crispy }}
+                    </div>
+                    {% if user.id is not none %}
+                        <button type="submit" class="btn btn-danger" data-toggle="button" aria-pressed="false"
+                                autocomplete="off">Comment
+                        </button>
+                    {% else %}
+                        <p class="alert alert-danger" role="alert">You must be logged in to post a review.</p>
+                    {% endif %}
+                </form>
+            </div>
         </div>
-            {% if user.id is not none %}
-                <button type="submit" class="btn btn-danger" data-toggle="button" aria-pressed="false"
-                        autocomplete="off">Comment
-                </button>
-            {% else %}
-                <p class="alert alert-danger" role="alert">You must be logged in to post a review.</p>
-            {% endif %}
-        </form>
-    </div>
-    </div>
         <br>
         {% for comment in list.comments.all reversed %}
             <div class="jumbotron comment">

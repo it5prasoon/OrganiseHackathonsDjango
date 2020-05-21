@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .forms import SignUpForm, CommentForm, editProfileForm, ProfileForm
+from .forms import SignUpForm, CommentForm, editProfileForm, ProfileForm, ListForm
 from .models import Category, List, Comment
 
 
@@ -29,9 +29,25 @@ def allProdcat(request, c_slug=None):
 def hackathonList(request, c_slug, product_slug):
     try:
         list = List.objects.get(category__slug=c_slug, slug=product_slug)
+        is_registered = False
+        if list.register.filter(id=request.user.id).exists():
+            is_registered = True
     except Exception as e:
         raise e
-    return render(request, 'product.html', {'list': list})
+    return render(request, 'product.html',
+                  {'list': list, 'is_registered': is_registered, 'total_registered': list.total_registered()})
+
+
+def register(request):
+    list = get_object_or_404(List, id=request.POST.get('list_id'))
+    if list.register.filter(id=request.user.id).exists():
+        list.register.remove(request.user)
+        is_registered = False
+    else:
+        list.register.add(request.user)
+        messages.success(request, "You are registered to the Event! Download the question!")
+        is_registered = True
+    return HttpResponseRedirect(list.get_url())
 
 
 def addcomment(request, id):
@@ -76,7 +92,7 @@ def signinView(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('index')
+                return redirect('profile')
             else:
                 return redirect('signup')
     else:
@@ -128,3 +144,18 @@ def changePassword(request):
 
         args = {'form': form}
         return render(request, 'accounts/changePassword.html', args)
+
+
+def publish(request):
+    template = 'publish_list.html'
+    # if not request.user.is_authenticated():
+    #     raise Http404
+    form = ListForm(request.POST or None, request.FILES)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.user = request.user
+        instance.save()
+        messages.success(request, "Succesfully Published!")
+        return redirect('main:allProdcat')
+
+    return render(request, template, {'list': list, 'form': form})

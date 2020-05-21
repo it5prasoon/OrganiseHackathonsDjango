@@ -11,156 +11,78 @@
     <link rel="stylesheet" type="text/css" href="{% static 'fonts/fontawesome-all.min.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Verdana, sans-serif;
-        }
-
-        .mySlides {
-            display: none;
-        }
-
-        img {
-            vertical-align: middle;
-        }
-
-        /* Slideshow container */
-        .slideshow-container {
-            max-width: 1000px;
-            position: relative;
-            margin: auto;
-        }
-
-        /* Caption text */
-        .text {
-            color: #f2f2f2;
-            font-size: 15px;
-            padding: 8px 12px;
-            position: absolute;
-            bottom: 8px;
-            width: 100%;
-            text-align: center;
-        }
-
-        /* Number text (1/3 etc) */
-        .numbertext {
-            color: #f2f2f2;
-            font-size: 12px;
-            padding: 8px 12px;
-            position: absolute;
-            top: 0;
-        }
-
-        /* The dots/bullets/indicators */
-        .dot {
-            height: 15px;
-            width: 15px;
-            margin: 0 2px;
-            background-color: #bbb;
-            border-radius: 50%;
-            display: inline-block;
-            transition: background-color 0.6s ease;
-        }
-
-        .active {
-            background-color: #717171;
-        }
-
-        /* Fading animation */
-        .fade {
-            -webkit-animation-name: fade;
-            -webkit-animation-duration: 1.5s;
-            animation-name: fade;
-            animation-duration: 1.5s;
-        }
-
-        @-webkit-keyframes fade {
-            from {
-                opacity: .4
-            }
-            to {
-                opacity: 1
-            }
-        }
-
-        @keyframes fade {
-            from {
-                opacity: .4
-            }
-            to {
-                opacity: 1
-            }
-        }
-
-        /* On smaller screens, decrease text size */
-        @media only screen and (max-width: 300px) {
-            .text {
-                font-size: 11px
-            }
-        }
-    </style>
-
     <title>{% block title %} {% endblock %}</title>
 </head>
 <body>
-{#<div class="bg-dark">#}
-<div class="container bg-light">
+<style>
+    .dropdown:hover > .dropdown-menu {
+        display: block;
+    }
+</style>
+<script type="text/javascript">
+    $('.dropdown').mouseenter(function () {
+        $(this).children('.cust-drop').addClass('show')
+    })
+</script>
 
-    <nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
-        <a class="navbar-brand" href="#">HORG</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navb"
-                aria-expanded="true">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div id="navb" class="navbar-collapse collapse hide">
-            <ul class="navbar-nav">
-                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'index' %}">Home</a>
+<div class="navig">
+<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
+    <a class="navbar-brand" href="#">HORG</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navb"
+            aria-expanded="true">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navb" class="navbar-collapse collapse hide">
+        <ul class="navbar-nav ">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'index' %}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'main:allProdcat' %}">Explore</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'publish'%}">Organise</a>
+            </li>
+        </ul>
+
+        <ul class="nav navbar-nav ml-auto">
+            {% if request.user.is_authenticated and request.user.first_name %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="{% url 'profile' %}" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ request.user.first_name }}
+                    </a>
+                    <div class="dropdown-menu cust-drop" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
+                        <a class="dropdown-item" href="{% url 'editProfile' %}">Edit Profile</a>
+                        <a class="dropdown-item" href="{% url 'changePassword' %}">Change Password</a>
+                    </div>
+                </li>
+                <li>
+                    <a class="nav-link" href="{% url 'signout' %}" aria-haspopup="true"
+                       aria-expanded="false">Sign Out</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signup' %}"> Sign Up</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'main:allProdcat' %}">Explore</a>
+                    <a class="nav-link" href="{% url 'signin' %}">Login</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Page 2</a>
-                </li>
-            </ul>
-
-            <ul class="nav navbar-nav ml-auto">
-                {% if request.user.is_authenticated and request.user.first_name %}
-                    <li>
-                        <a class="nav-link dropdown-toggle" href="{% url 'profile' %}">{{ request.user.first_name }}</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="{% url 'signout' %}" aria-haspopup="true"
-                           aria-expanded="false">Sign Out</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'signup' %}"> Sign Up</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'signin' %}">Login</a>
-                    </li>
-                {% endif %}
-            </ul>
-        </div>
-    </nav>
-    <!-- Top Nav-->
-
-    {% block content %}
-
-    {% endblock %}
-    <!-- Footer -->
-    <div class="my_footer bg-secondary">
-        <p class="my_footer p">Made for HACKOVID by Prasoon</p>
+            {% endif %}
+        </ul>
     </div>
-</div>
+</nav>
+<!-- Top Nav-->
 
-{#</div>#}
+{% block content %}
+
+{% endblock %}
+<!-- Footer -->
+<div class="my_footer bg-secondary">
+    <p class="my_footer p">Made for HACKOVID by Prasoon</p>
+</div>
+</div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="{% static 'js/jquery-3.4.1.slim.min.js' %}"></script>

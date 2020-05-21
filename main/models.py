@@ -3,7 +3,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.urls import reverse
 from django.utils import timezone
-
+from django.conf import settings
 
 class Category(models.Model):
     name = models.CharField(max_length=300, unique=True)
@@ -25,16 +25,17 @@ class Category(models.Model):
 
 
 class List(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete=models.CASCADE)
     name = models.CharField(max_length=300, unique=True)
     slug = models.SlugField(max_length=250, unique=True)
     description = models.TextField(blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    registered = models.DecimalField(max_digits=7, decimal_places=0)
+    register = models.ManyToManyField(User, related_name='likes', blank=True)
     image = models.ImageField(upload_to='product', blank=True)
     daysLeft = models.BooleanField(default=True)
     noofdays = models.DecimalField(max_digits=3, decimal_places=0)
     WhoIsConducting = models.CharField(max_length=250)
-    question = models.FileField(upload_to='questions')
+    question = models.FileField(upload_to='questions', blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -50,6 +51,9 @@ class List(models.Model):
     def __str__(self):
         return '{}'.format(self.name)
 
+    def total_registered(self):
+        return self.register.count()
+
 
 class Comment(models.Model):
     post = models.ForeignKey(List, on_delete=models.CASCADE, related_name='comments')
@@ -63,6 +67,12 @@ class Comment(models.Model):
         return str(self.user)
 
 
+choices = (
+    (1, "Organiser"),
+    (2, "Participant"),
+)
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     about = models.CharField(max_length=150, default='', blank=True)
@@ -71,6 +81,7 @@ class UserProfile(models.Model):
     Address = models.CharField(max_length=100, blank=True)
     phone = models.CharField(max_length=10, blank=True)
     images = models.ImageField(upload_to='profileImage', blank=True)
+    Job = models.IntegerField(choices=choices, default=2)
 
     def __str__(self):
         return self.user.username

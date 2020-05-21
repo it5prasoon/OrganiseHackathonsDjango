@@ -61,14 +61,24 @@
             {#                </a>#}
             {#            </div>#}
         {% endif %}
-        <div class="jumbotron">
-            <h1>Hackathons Continued!</h1>
-            <p>Here You can explore hackathons conducted by different tech companies.</p>
-        </div>
+    <div class="jumbotron">
+        <h1>Hackathons Continued!</h1>
+        <p class="text-muted">Here You can explore hackathons conducted by different tech companies.</p>
+    </div>
     <div class="container">
+        <br>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-success " role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </ul>
+        {% endif %}
         <div class="row mx-auto">
             {% for list in lists %}
-                <div class="my_bottom_margin col-12 col-sm-12 col-md-10 col-md-12 col-lg-4">
+                <div class="my_bottom_margin col-12 col-sm-6 col-md-6 col-lg-4">
                     <div class="card shadow text-center" style="min-width: 17rem;">
                         <div class="inner">
                             <a href="{{ list.get_url }}"><img class="card-img-top my_image" src="{{ list.image.url }}"

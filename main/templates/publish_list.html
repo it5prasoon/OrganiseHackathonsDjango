@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+{% block title %}
+    Publish
+{% endblock %}
+{% block content %}
+
+    <div class="container">
+        <div class="jumbotron">
+            <h1>You can publish your event Here!</h1>
+            <label class="text-muted">Make sure you are organiser or Staff!</label>
+        </div>
+        <form action="{% url 'publish' %}" enctype='multipart/form-data' role="form" method="post"
+              style="margin-top: 1.3em;">
+            {% csrf_token %}
+            <div class="jumbotron">
+                {{ form|crispy }}
+            </div>
+            {% if user.id is not none %}
+                <button type="submit" class="btn btn-danger" data-toggle="button" aria-pressed="false"
+                >Publish Event
+                </button>
+            {% else %}
+                <p class="alert alert-danger" role="alert">You must be logged in to post your event.</p>
+            {% endif %}
+        </form>
+
+    </div>
+{% endblock %}

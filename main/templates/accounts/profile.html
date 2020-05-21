@@ -10,20 +10,39 @@
 {% endblock %}
 {% block content %}
     <div class="container">
-        <h1>Profile</h1>
-        <img src="{{ user.userprofile.images.url }}" alt="User" width="240">
+        <Center>
+            <h1>Profile</h1>
+            {#        <p class="text-muted">You can see or change your profile information.</p>#}
+        </Center>
         <br>
-        <p>Username: {{ user }}</p>
-        <p>First Name: {{ user.first_name }}</p>
-        <p>Last Name: {{ user.last_name }}</p>
-        <p>Email: {{ user.email }}</p>
-        <p>Institute: {{ user.userprofile.institute_name }}</p>
-        <p>Registration Number: {{ user.userprofile.registration_number }}</p>
-        <p>Address: {{ user.userprofile.Address }}</p>
-        <p>Phone: {{ user.userprofile.phone }}</p>
-        <p>About: {{ user.userprofile.about }}</p>
+        <div class="profile-card">
+            <div class="image-container">
+                <div class="inner">
+                    <img src="{{ user.userprofile.images.url }}" alt="{{ list.name }}" style="width:100%">
+                </div>
+                <div class="title">
+                    <center>
+                        <h2><strong>{{ user.first_name }} {{ user.last_name }}</strong></h2>
+                    </center>
+                </div>
+            </div>
 
+        </div>
+        <hr class="new5">
+        <div class="main-container">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Username: {{ user }} </li>
+                <li class="list-group-item">Email: {{ user.email }}</li>
+                <li class="list-group-item">Institute: {{ user.userprofile.institute_name }}</li>
+                <li class="list-group-item">Registration Number: {{ user.userprofile.registration_number }} </li>
+                <li class="list-group-item">Address: {{ user.userprofile.Address }}</li>
+                <li class="list-group-item">Phone: {{ user.userprofile.phone }}</li>
+                <li class="list-group-item">About: {{ user.userprofile.about }}</li>
 
-        <a href="{% url 'editProfile' %}" class="btn btn-secondary">Edit Profile</a>
+            </ul>
+        </div>
+        <center>
+            <a href="{% url 'editProfile' %}" class="btn btn-secondary">Edit Profile</a>
+        </center>
     </div>
 {% endblock %}
