@@ -4,5 +4,6 @@ gunicorn==20.0.4
 Pillow==7.1.1
 pipenv==2018.11.26
 pytz==2019.3
+channels
 
 

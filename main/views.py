@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, redirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -12,6 +12,10 @@ from .models import Category, List, Comment
 
 def index(request):
     return render(request, 'homepage.html')
+
+
+# class Notification(TemplateView):
+#     template_name = 'notifications.html'
 
 
 def allProdcat(request, c_slug=None):
@@ -154,8 +158,9 @@ def changePassword(request):
 
 def publish(request):
     template = 'publish_list.html'
-    # if not request.user.is_authenticated():
-    #     raise Http404
+    if not request.user.is_authenticated:
+        messages.success(request, "You need to register as organiser first!")
+        return redirect('signup')
     form = ListForm(request.POST or None, request.FILES)
     if form.is_valid():
         instance = form.save(commit=False)

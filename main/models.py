@@ -67,13 +67,6 @@ class Comment(models.Model):
     def __str__(self):
         return str(self.user)
 
-
-choices = (
-    (1, "Organiser"),
-    (2, "Participant"),
-)
-
-
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     about = models.CharField(max_length=150, default='', blank=True)
@@ -82,7 +75,6 @@ class UserProfile(models.Model):
     Address = models.CharField(max_length=100, blank=True)
     phone = models.CharField(max_length=10, blank=True)
     images = models.ImageField(upload_to='profileImage', blank=True, null=True)
-    Job = models.IntegerField(choices=choices, default=2)
 
     def __str__(self):
         return self.user.username

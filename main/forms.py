@@ -1,8 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 
-from .models import Comment, UserProfile, choices, List
+from .models import Comment, UserProfile, List
 
 
 class SignUpForm(UserCreationForm):
@@ -24,6 +24,9 @@ class CommentForm(forms.ModelForm):
 
 
 class editProfileForm(UserChangeForm):
+    password = forms.CharField(disabled=True)
+    role = forms.ModelChoiceField(queryset=Group.objects.all(), widget=forms.Select())
+
     class Meta:
         model = User
         fields = ('email',
@@ -32,15 +35,32 @@ class editProfileForm(UserChangeForm):
                   'password',
                   )
 
+    def __init__(self, *args, **kwargs):
+        if kwargs.get('instance'):
+            initial = kwargs.setdefault('initial', {})
+            if kwargs['instance'].groups.all():
+                initial['role'] = kwargs['instance'].groups.all()[0]
+            else:
+                initial['role'] = None
+        forms.ModelForm.__init__(self, *args, **kwargs)
+
+    def save(self):
+        role = self.cleaned_data.pop('role')
+        u = super().save()
+        u.groups.set([role])
+
+        return u
+
 
 class ProfileForm(forms.ModelForm):
-    Job = forms.ChoiceField(choices=choices, label="", initial='', widget=forms.Select(), required=True)
+    role = forms.ModelChoiceField(queryset=Group.objects.all(), widget=forms.Select())
 
     class Meta:
         model = UserProfile
         fields = ('institute_name', 'registration_number', 'Address', 'phone', 'images', 'about')
         widgets = {
             'Address': forms.Textarea(attrs={'class': 'input'}),
+            'about': forms.Textarea(attrs={'class': 'input', 'placeholders': 'Describe Yourself'}),
         }
 
 
