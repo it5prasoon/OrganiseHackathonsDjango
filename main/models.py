@@ -1,9 +1,10 @@
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
 from django.urls import reverse
 from django.utils import timezone
-from django.conf import settings
+
 
 class Category(models.Model):
     name = models.CharField(max_length=300, unique=True)
@@ -80,14 +81,15 @@ class UserProfile(models.Model):
     registration_number = models.CharField(max_length=100)
     Address = models.CharField(max_length=100, blank=True)
     phone = models.CharField(max_length=10, blank=True)
-    images = models.ImageField(upload_to='profileImage', blank=True)
+    images = models.ImageField(upload_to='profileImage', blank=True, null=True)
     Job = models.IntegerField(choices=choices, default=2)
 
     def __str__(self):
         return self.user.username
 
 
-def create_profile(sender, instance, **kwargs):
+def create_profile(sender, instance, created, **kwargs):
     if kwargs['created']:
         user_profile = UserProfile.objects.create(user=kwargs['instance'])
+        user_profile.save()
     post_save.connect(create_profile(sender=User))

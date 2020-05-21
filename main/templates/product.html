@@ -37,21 +37,27 @@
                         <a href="{{ list.question.url }}" class="btn btn-danger">Download the Info</a>
                         <br>
                         <p>
-                        <form method="post" action="{% url 'register' %}" novalidate>
-                            {% csrf_token %}
-                            {% if is_registered %}
-                                <button class="btn btn-danger" type="submit" name="list_id" value="{{ list.id }}">
-                                    Unregister
-                                </button>
-                            {% else %}
-                                <button class="btn btn-danger" type="submit" name="list_id" value="{{ list.id }}">
-                                    Register
-                                </button>
+                            {% if user.id is not none %}
+                                <form method="post" action="{% url 'register' %}">
+                                    {% csrf_token %}
+                                    {% if is_registered %}
+                                        <button class="btn btn-danger" type="submit" name="list_id"
+                                                value="{{ list.id }}">
+                                            Unregister
+                                        </button>
+                                    {% else %}
+                                        <button class="btn btn-danger" type="submit" name="list_id"
+                                                value="{{ list.id }}">
+                                            Register
+                                        </button>
 
+                                    {% endif %}
+                                </form>
+                            {% else %}
+                                <p class="alert alert-danger" role="alert">You must be logged in to Register.</p>
                             {% endif %}
-                        </form>
                         </p>
-                    <p>Total registrations: {{ total_registered }}</p>
+                        <p>Total registration: {{ total_registered }}</p>
                     </div>
                 </div>
             </div>
@@ -61,16 +67,6 @@
     </div>
     <hr class="new5">
     <div class="container">
-        <br>
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    <div class="alert alert-success " role="alert">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            </ul>
-        {% endif %}
         <p class="alert alert-dark" role="alert"><strong>Leave A Comment:</strong></p>
         <div class="row">
             <div class="col-md-8">

@@ -26,62 +26,73 @@
 </script>
 
 <div class="navig">
-<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
-    <a class="navbar-brand" href="#">HORG</a>
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navb"
-            aria-expanded="true">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div id="navb" class="navbar-collapse collapse hide">
-        <ul class="navbar-nav ">
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'index' %}">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'main:allProdcat' %}">Explore</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'publish'%}">Organise</a>
-            </li>
-        </ul>
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
+        <a class="navbar-brand" href="#">HORG</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navb"
+                aria-expanded="true">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="navb" class="navbar-collapse collapse hide">
+            <ul class="navbar-nav ">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:allProdcat' %}">Explore</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'publish' %}">Organise</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Notifications</a>
+                </li>
+            </ul>
 
-        <ul class="nav navbar-nav ml-auto">
-            {% if request.user.is_authenticated and request.user.first_name %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="{% url 'profile' %}" id="navbarDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ request.user.first_name }}
-                    </a>
-                    <div class="dropdown-menu cust-drop" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
-                        <a class="dropdown-item" href="{% url 'editProfile' %}">Edit Profile</a>
-                        <a class="dropdown-item" href="{% url 'changePassword' %}">Change Password</a>
-                    </div>
-                </li>
-                <li>
-                    <a class="nav-link" href="{% url 'signout' %}" aria-haspopup="true"
-                       aria-expanded="false">Sign Out</a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'signup' %}"> Sign Up</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'signin' %}">Login</a>
-                </li>
-            {% endif %}
+            <ul class="nav navbar-nav ml-auto">
+                {% if request.user.is_authenticated and request.user.first_name %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="{% url 'profile' %}" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ request.user.first_name }}
+                        </a>
+                        <div class="dropdown-menu cust-drop" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
+                            <a class="dropdown-item" href="{% url 'editProfile' %}">Edit Profile</a>
+                            <a class="dropdown-item" href="{% url 'changePassword' %}">Change Password</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{% url 'signout' %}" aria-haspopup="true"
+                           aria-expanded="false">Sign Out</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signup' %}"> Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signin' %}">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <!-- Top Nav-->
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <div class="alert alert-success " role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
         </ul>
+    {% endif %}
+    {% block content %}
+
+    {% endblock %}
+    <!-- Footer -->
+    <div class="my_footer bg-secondary">
+        <p class="my_footer p">Made for HACKOVID by Prasoon</p>
     </div>
-</nav>
-<!-- Top Nav-->
-
-{% block content %}
-
-{% endblock %}
-<!-- Footer -->
-<div class="my_footer bg-secondary">
-    <p class="my_footer p">Made for HACKOVID by Prasoon</p>
-</div>
 </div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

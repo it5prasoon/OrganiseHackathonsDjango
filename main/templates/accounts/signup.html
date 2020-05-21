@@ -3,47 +3,49 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block metadescription %}
-	Sign up to get a new account with us.
+    Sign up to get a new account with us.
 {% endblock %}
 {% block title %}
-	Create a New Account
+    Create a New Account
 {% endblock %}
 {% block content %}
-	<div>
-		{% if not form.is_valid %}
-			<div class="mx-auto">
-				<br>
-				<h1 class="my_title text-center">Create a new account</h1>
-				<br>
-				<div class="col-9 col-sm-9 col-md-6 col-lg-5 mx-auto bg-light">
-					<br>
-					<p>Enter the following information to create a new account.</p>
-					<form method="post">
-						{% csrf_token %}
-						<p>{{ form | crispy }}</p>
-						<button type="submit" class="btn btn-secondary">Register Account</button>
-					</form>
-					<br>
-				</div>
-			</div>
-		{% else %}
-			<div class="mx-auto">
-				<br>
-				<h1 class="my_title text-center">Your account has been already created</h1>
-				<br>
-				<div>
-					<p>
-						Dear Customer,
-						<br>
-						<br>
-						Your account has been created and it is ready to use.
-						<br>
-						<a href="{% url 'main:allProdcat' %}">Continue to Login</a>
-					</p>
-				</div>
-			</div>
+    <div>
+        {% if not form.is_valid %}
+            <div class="mx-auto">
+                <br>
+                <h1 class="my_title text-center">Create a new account</h1>
+                <br>
+                <div class="col-9 col-sm-9 col-md-6 col-lg-5 mx-auto bg-light">
+                    <br>
+                    <p>Enter the following information to create a new account.</p>
+                    <form method="post" enctype='multipart/form-data' role="form">
+                        {% csrf_token %}
+                        <p>{{ form | crispy }}</p>
+                        <p>{{ profile_form | crispy }}</p>
 
-		{% endif %}
-	</div>
-	<br>
+                        <button type="submit" class="btn btn-secondary">Register Account</button>
+                    </form>
+                    <br>
+                </div>
+            </div>
+        {% else %}
+            <div class="mx-auto">
+                <br>
+                <h1 class="my_title text-center">Your account has been already created</h1>
+                <br>
+                <div>
+                    <p>
+                        Dear Customer,
+                        <br>
+                        <br>
+                        Your account has been created and it is ready to use.
+                        <br>
+                        <a href="{% url 'main:allProdcat' %}">Continue to Login</a>
+                    </p>
+                </div>
+            </div>
+
+        {% endif %}
+    </div>
+    <br>
 {% endblock %}

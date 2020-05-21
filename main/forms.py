@@ -43,6 +43,7 @@ class ProfileForm(forms.ModelForm):
             'Address': forms.Textarea(attrs={'class': 'input'}),
         }
 
+
 class ListForm(forms.ModelForm):
     class Meta:
         model = List

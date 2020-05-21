@@ -66,16 +66,6 @@
         <p class="text-muted">Here You can explore hackathons conducted by different tech companies.</p>
     </div>
     <div class="container">
-        <br>
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    <div class="alert alert-success " role="alert">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            </ul>
-        {% endif %}
         <div class="row mx-auto">
             {% for list in lists %}
                 <div class="my_bottom_margin col-12 col-sm-6 col-md-6 col-lg-4">

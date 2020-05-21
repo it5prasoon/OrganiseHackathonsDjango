@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
-from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from django.shortcuts import render
@@ -40,6 +39,7 @@ def hackathonList(request, c_slug, product_slug):
 
 def register(request):
     list = get_object_or_404(List, id=request.POST.get('list_id'))
+    is_registered = False
     if list.register.filter(id=request.user.id).exists():
         list.register.remove(request.user)
         is_registered = False
@@ -71,16 +71,41 @@ def addcomment(request, id):
 def signupView(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
+        profile_form = ProfileForm(request.POST, request.FILES)
+
+        if form.is_valid() and profile_form.is_valid():
+            user = form.save()
+            profile = profile_form.save(commit=False)
+            profile.user = user
+            profile.save()
+
             username = form.cleaned_data.get('username')
-            signup_user = User.objects.get(username=username)
-            # customer_group = Group.objects.get(name='Customer')
-            # customer_group.user_set.add(signup_user)
+            password = form.cleaned_data.get('password')
             return redirect('signin')
     else:
         form = SignUpForm()
-    return render(request, 'accounts/signup.html', {'form': form})
+        profile_form = ProfileForm(request.POST, request.FILES)
+
+    return render(request, 'accounts/signup.html', {'form': form, 'profile_form': profile_form})
+
+
+def editProfileView(request):
+    if request.method == 'POST':
+        form = editProfileForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.userprofile)
+
+        if form.is_valid() and profile_form.is_valid():
+            user_form = form.save()
+            custom_form = profile_form.save(commit=False)
+            custom_form.user = user_form
+            custom_form.save()
+            return redirect('profile')
+
+    else:
+        form = editProfileForm(instance=request.user)
+        profile_form = ProfileForm(instance=request.user.userprofile)
+        args = {'form': form, 'profile_form': profile_form}
+        return render(request, 'accounts/edit_profile.html', args)
 
 
 def signinView(request):
@@ -108,25 +133,6 @@ def profileView(request):
 def signoutView(request):
     logout(request)
     return redirect('signin')
-
-
-def editProfileView(request):
-    if request.method == 'POST':
-        form = editProfileForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.userprofile)
-
-        if form.is_valid() and profile_form.is_valid():
-            user_form = form.save()
-            custom_form = profile_form.save(False)
-            custom_form.user = user_form
-            custom_form.save()
-            return redirect('profile')
-
-    else:
-        form = editProfileForm(instance=request.user)
-        profile_form = ProfileForm(instance=request.user.userprofile)
-        args = {'form': form, 'profile_form': profile_form}
-        return render(request, 'accounts/edit_profile.html', args)
 
 
 def changePassword(request):
