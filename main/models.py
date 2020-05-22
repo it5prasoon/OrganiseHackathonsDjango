@@ -59,13 +59,14 @@ class List(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey(List, on_delete=models.CASCADE, related_name='comments')
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
-    subject = models.CharField(max_length=200)
+    reply = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies')
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     approved_comment = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.user)
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

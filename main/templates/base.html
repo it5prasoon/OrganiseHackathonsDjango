@@ -26,7 +26,7 @@
 </script>
 
 <div class="navig">
-    <nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
+    <nav class="navbar navbar-expand-md bg-secondary navbar-dark sticky-top">
         <a class="navbar-brand" href="#">HORG</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navb"
                 aria-expanded="true">
@@ -40,7 +40,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'main:allProdcat' %}">Explore</a>
                 </li>
-                {% if request.role == 'Organiser' %}
+                {% if request.role == 'Organiser' or request.role == 'Admin' %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'publish' %}">Organise</a>
                 </li>

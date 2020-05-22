@@ -65,32 +65,33 @@
         <div class="col-12 col-lg-auto"></div>
         <br>
     </div>
+    <style>
+        sub {
+            font-size: smaller;
+        }
+    </style>
     <hr class="new5">
     <div class="container">
-        <p class="alert alert-dark" role="alert"><strong>Leave A Comment:</strong></p>
-        <div class="row">
-            <div class="col-md-8">
-                <form action="{% url 'main:addcomment' list.id %}" role="form" method="post" style="margin-top: 1.3em;">
-                    {% csrf_token %}
-                    <div class="jumbotron">
-                        {{ form|crispy }}
-                    </div>
-                    {% if user.id is not none %}
-                        <button type="submit" class="btn btn-danger" data-toggle="button" aria-pressed="false"
-                                autocomplete="off">Comment
-                        </button>
-                    {% else %}
-                        <p class="alert alert-danger" role="alert">You must be logged in to post a review.</p>
-                    {% endif %}
-                </form>
-            </div>
+
+        <div class="comment-container">
+            <p class="alert alert-dark" role="alert"><strong>Leave A Comment: </strong><sub class="text-muted">Click
+                to open form</sub></p>
+            <form action="{% url 'main:addcomment' list.id %}" role="form" method="post" style="margin-top: 1.3em;">
+                {% csrf_token %}
+                {{ form|crispy }}
+                {% if user.id is not none %}
+                    <button type="submit" class="btn btn-danger">Comment</button>
+                {% else %}
+                    <p class="alert alert-danger" role="alert">You must be logged in to post a review.</p>
+                {% endif %}
+            </form>
         </div>
         <br>
         {% for comment in list.comments.all reversed %}
             <div class="jumbotron comment">
                 <div class="date">{{ comment.created_date }}</div>
+                <br>
                 <strong>User: {{ comment.user }}</strong>
-                <p>Subject: {{ comment.subject }}</p>
                 <p>{{ comment.text|linebreaks }}</p>
                 <br>
             </div>

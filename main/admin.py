@@ -27,8 +27,8 @@ admin.site.register(UserProfile)
 
 class CommentAdmin(admin.ModelAdmin):
     model = Comment
-    list_display = ['subject', 'text', 'created_date']
-    randomly_fields = ['subject', 'text']
+    list_display = ['text', 'created_date']
+    randomly_fields = ['text']
 
 
 admin.site.register(List, ListAdmin)

@@ -14,11 +14,10 @@ class SignUpForm(UserCreationForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ('subject', 'text')
+        fields = ('text',)
 
     widgets = {
-        'subject': forms.TextInput(attrs={'class': 'input', 'placeholder': 'Subject', 'cols': 100}),
-        'text': forms.Textarea(attrs={'class': 'input', 'cols': 100})
+        'text': forms.Textarea(attrs={'class': 'input', 'cols': 4, 'rows': 3, 'placeholders': 'Your comment'})
 
     }
 
@@ -53,8 +52,6 @@ class editProfileForm(UserChangeForm):
 
 
 class ProfileForm(forms.ModelForm):
-    role = forms.ModelChoiceField(queryset=Group.objects.all(), widget=forms.Select())
-
     class Meta:
         model = UserProfile
         fields = ('institute_name', 'registration_number', 'Address', 'phone', 'images', 'about')

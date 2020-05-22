@@ -1,7 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
-from django.http import HttpResponseRedirect, Http404
+from django.core.paginator import Paginator
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -59,7 +60,6 @@ def addcomment(request, id):
     form = CommentForm(request.POST or None)
     if form.is_valid():
         data = Comment()
-        data.subject = form.cleaned_data['subject']
         data.text = form.cleaned_data['text']
         print("Redirected.....")
         current_user = request.user

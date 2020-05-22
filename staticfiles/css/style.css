@@ -49,6 +49,23 @@ img {
     margin: auto;
 }
 
+.comment-container {
+    width: auto;
+    border: 2px solid #333;
+    padding: 15px 10px;
+}
+
+/*.carousel-item {*/
+/*  height: 84.5vh;*/
+/*  min-height: 350px;*/
+/*  background: no-repeat center center scroll;*/
+/*  -webkit-background-size: cover;*/
+/*  -moz-background-size: cover;*/
+/*  -o-background-size: cover;*/
+/*  background-size: cover;*/
+/*}*/
+
+
 /* Caption text */
 .text {
     color: #f2f2f2;
