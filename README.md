@@ -1,5 +1,5 @@
 # OrganiseHackathonsDjango
-[a link](https://horg.herokuapp.com)
+[App Link HORG](https://horg.herokuapp.com)
 
 Note:- To conduct an event go through organiser role in edit profile!
 
