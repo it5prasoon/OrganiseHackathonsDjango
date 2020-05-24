@@ -15,6 +15,9 @@
     {% endif %}
 {% endblock %}
 {% block content %}
+    {% block navigation %}
+        {% include 'navigation.html' %}
+    {% endblock %}
     <!--Breadcrumb navigation-->
     {% if category %}
         <div class="row my_row_class">
@@ -45,7 +48,7 @@
         <div class="row mx-auto">
             {% if lists %}
                 {% for list in lists %}
-                    <div class="my_bottom_margin col-12 col-sm-6 col-md-6 col-lg-4">
+                    <div class="my_bottom_margin col-xs-12 col-12 col-sm-6 col-md-6 col-lg-4">
                         <div class="card shadow text-center" style="min-width: 17rem;">
                             <div class="inner">
                                 <a href="{{ list.get_url }}"><img class="card-img-top my_image"
@@ -72,5 +75,7 @@
             {% endif %}
         </div>
     </div>
-
+    {% block footer %}
+        {% include 'footer.html' %}
+    {% endblock %}
 {% endblock %}

@@ -3,13 +3,16 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block metadescription %}
-Change profile info.
+    Change profile info.
 {% endblock %}
 {% block title %}
     Edit Profile
 {% endblock %}
 {% block content %}
-	<div class="container">
+    {% block navigation %}
+        {% include 'navigation.html' %}
+    {% endblock %}
+    <div class="container">
         <form method="post" novalidate>
             {% csrf_token %}
             {{ form | crispy }}
@@ -17,6 +20,9 @@ Change profile info.
             <button class="btn btn-secondary" type="submit">Submit</button>
         </form>
 
-    <br>
+        <br>
     </div>
+    {% block footer %}
+        {% include 'footer.html' %}
+    {% endblock %}
 {% endblock %}

@@ -9,6 +9,9 @@
     Profile
 {% endblock %}
 {% block content %}
+    {% block navigation %}
+        {% include 'navigation.html' %}
+    {% endblock %}
     <div class="container">
         <Center>
             <h1>Profile</h1>
@@ -47,4 +50,7 @@
         </center>
         <br>
     </div>
+    {% block footer %}
+        {% include 'footer.html' %}
+    {% endblock %}
 {% endblock %}

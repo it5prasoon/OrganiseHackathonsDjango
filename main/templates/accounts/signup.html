@@ -9,6 +9,9 @@
     Create a New Account
 {% endblock %}
 {% block content %}
+    {% block navigation %}
+        {% include 'navigation.html' %}
+    {% endblock %}
     <div>
         {% if not form.is_valid %}
             <div class="mx-auto">
@@ -47,5 +50,7 @@
 
         {% endif %}
     </div>
-    <br>
+    {% block footer %}
+        {% include 'footer.html' %}
+    {% endblock %}
 {% endblock %}

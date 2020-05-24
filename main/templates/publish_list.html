@@ -5,7 +5,9 @@
     Publish
 {% endblock %}
 {% block content %}
-
+    {% block navigation %}
+        {% include 'navigation.html' %}
+    {% endblock %}
     <div class="container">
         <div class="jumbotron">
             <h1>You can publish your event Here!</h1>
@@ -25,6 +27,8 @@
                 <p class="alert alert-danger" role="alert">You must be logged in to post your event.</p>
             {% endif %}
         </form>
-
     </div>
+    {% block footer %}
+        {% include 'footer.html' %}
+    {% endblock %}
 {% endblock %}
