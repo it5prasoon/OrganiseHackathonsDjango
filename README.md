@@ -1,4 +1,7 @@
 # OrganiseHackathonsDjango
+[App Link HORG](https://horg.herokuapp.com)
+
+Note:- To conduct an event go through organiser role in edit profile!
 
 This is the Web app built using django==3.0.5 framework and python==3.7.1. You can refer to requirements.txt for more information.
 
