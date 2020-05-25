@@ -28,7 +28,7 @@
                     </li>
                     {% if request.role == 'Organiser' or request.role == 'Admin' %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'publish' %}">Organise</a>
+                            <a class="nav-link" href="{% url 'organiserView' %}">Organisers</a>
                         </li>
                     {% endif %}
                     {#                <li class="nav-item">#}
@@ -65,4 +65,5 @@
                 </ul>
             </div>
         </nav>
+    </div>
 {% endblock %}

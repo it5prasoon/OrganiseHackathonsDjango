@@ -15,6 +15,10 @@ def index(request):
     return render(request, 'homepage.html')
 
 
+def organiserView(request):
+    return render(request, 'organiser.html')
+
+
 # class Notification(TemplateView):
 #     template_name = 'notifications.html'
 
@@ -174,3 +178,4 @@ def publish(request):
         return redirect('main:allProdcat')
 
     return render(request, template, {'list': list, 'form': form})
+

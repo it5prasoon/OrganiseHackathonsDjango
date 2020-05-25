@@ -295,18 +295,6 @@ img {
     letter-spacing: .2em;
 }
 
-.inner {
-    overflow: hidden;
-}
-
-.inner img {
-    transition: all 1.5s ease;
-}
-
-.inner:hover img {
-    transform: scale(1.2);
-}
-
 .card-img-top {
     width: 15vw;
     height: 18vw;
