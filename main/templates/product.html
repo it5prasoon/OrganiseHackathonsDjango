@@ -9,100 +9,134 @@
 {% block content %}
     {% block navigation %}
         {% include 'navigation.html' %}
-    {% endblock %}
-    <div class="row my_prod_row_class">
-        <div class="container">
-            <br>
-            <div class="row mx-auto">
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                    <div style="min-width:17rem;">
-                        <div class="inner prod-img">
-                            <img class="my_prod_image" src="{{ list.image.url }}" alt="{{ list.name }}">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                    <div>
-                        <h1 class="my_prod_title">{{ list.name }}</h1>
-                        <p>
-                            <strong>
-                                <mark>Days Left: {{ list.noofdays }}</mark>
-                            </strong>
-                        </p>
-                        <b><p class="text-justify my_prod_text">Description: {{ list.description }}</p><br>
-                            <p class="text-justify my_prod_text">Conducting By: {{ list.WhoIsConducting }}</p>
-                            <p class="text-justify my_prod_text">Author: {{ user.get_full_name }}</p>
-                            <p class="text-justify my_prod_text">Created at: {{ list.created }}</p></b>
-                        <a href="{{ list.question.url }}" class="btn btn-danger">Download the Info</a>
-                        <br>
-                        <p>
-                            {% if user.id is not none %}
-                                <form method="post" action="{% url 'register' %}">
-                                    {% csrf_token %}
-                                    {% if is_registered %}
-                                        <button class="btn btn-danger" type="submit" name="list_id"
-                                                value="{{ list.id }}">
-                                            Unregister
-                                        </button>
-                                    {% else %}
-                                        <button class="btn btn-danger" type="submit" name="list_id"
-                                                value="{{ list.id }}">
-                                            Register
-                                        </button>
+	{% endblock %}
+	<link rel="stylesheet" href="{% static 'css/main.css' %}"/>
+	<head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    </head>
+	<body class="no-sidebar is-preload">
+			<!-- Main Wrapper -->
+				<div id="main-wrapper">
+					<div class="wrapper style2">
+						<div class="inner">
+							<div class="container">
+								<div id="content">
 
-                                    {% endif %}
-                                </form>
-                            {% else %}
-                                <p class="alert alert-danger" role="alert">You must be logged in to Register.</p>
-                            {% endif %}
-                        </p>
-                        <p>Total registration: {{ total_registered }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-lg-auto"></div>
-        <br>
-    </div>
-    <style>
-        sub {
-            font-size: smaller;
-        }
-    </style>
-    <hr class="new5">
-    <div class="container">
+									<!-- Content -->
 
-        <div class="comment-container">
-            <p class="alert alert-dark" role="alert"><strong>Leave A Comment: </strong><sub class="text-muted">Click
-                to open form</sub></p>
-            <form action="{% url 'main:addcomment' list.id %}" role="form" method="post" style="margin-top: 1.3em;">
-                {% csrf_token %}
-                {{ form|crispy }}
-                {% if user.id is not none %}
-                    <button type="submit" class="btn btn-danger">Comment</button>
-                {% else %}
-                    <p class="alert alert-danger" role="alert">You must be logged in to post a review.</p>
-                {% endif %}
-            </form>
-        </div>
-        <br>
-        {% for comment in list.comments.all reversed %}
-            <div class="jumbotron comment">
-                <div class="date">{{ comment.created_date }}</div>
-                <br>
-                <strong>User: {{ comment.user }}</strong>
-                <p>{{ comment.text|linebreaks }}</p>
-                <br>
-            </div>
-            <div class="comment">
+										<article>
+											<header class="major">
+												<h2>{{ list.name }}</h2>
+												<p>Author: {{ user.get_full_name }}</p>
+											</header>
+											<span class="image featured"><img src="{{ list.image.url }}" alt="{{ list.name }}"/></span>
+										</article>
+										<br>
+										<center>
+										<article>
+											<p>Description: {{ list.description }}</p>
+											<p>Conducting By: {{ list.WhoIsConducting }}</p>
+										<a href="{{ list.question.url }}" class="btn btn-danger">Download the Info</a>
+										<br>
+										<p>
+											{% if user.id is not none %}
+												<form method="post" action="{% url 'register' %}">
+													{% csrf_token %}
+													{% if is_registered %}
+														<button class="btn btn-danger" type="submit" name="list_id"
+																value="{{ list.id }}">
+															Unregister
+														</button>
+													{% else %}
+														<button class="btn btn-danger" type="submit" name="list_id"
+																value="{{ list.id }}">
+															Register
+														</button>
+				
+													{% endif %}
+												</form>
+											{% else %}
+												<p class="alert alert-danger" role="alert">You must be logged in to Register.</p>
+											{% endif %}
+										</p>
+										<p>Total registration: {{ total_registered }}</p>
+										<p>Created at: {{ list.created }}</p></b>
 
-            </div>
-        {% empty %}
-            <p>No comments here yet :(</p>
-        {% endfor %}
-    </div>
-    {% block footer %}
-        {% include 'footer.html' %}
-    {% endblock %}
+										</article>
+									</center>
+									<br>
+										<header class="major">
 
+										</header>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="wrapper style3">
+						<div class="inner">
+							<div class="container">
+								<div class="row">
+									<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+										<!-- Article list -->
+											<section class="box article-list">
+												<h2 class="icon fa-file-alt">Leave A Comment</h2>
+												<div class="comment-container">
+													<p class="alert alert-dark" role="alert"><strong>Leave A Comment: </strong><sub class="text-muted">Click
+														to open form</sub></p>
+													<form action="{% url 'main:addcomment' list.id %}" role="form" method="post" style="margin-top: 1.3em;">
+														{% csrf_token %}
+														{{ form|crispy }}
+														{% if user.id is not none %}
+															<button type="submit" class="btn btn-danger">Comment</button>
+														{% else %}
+															<p class="alert alert-danger" role="alert">You must be logged in to post a review.</p>
+														{% endif %}
+													</form>
+												</div>
+											</section>
+											<section>
+												<!-- Excerpt -->
+												{% for comment in list.comments.all reversed %}
+
+													<article class="box excerpt">
+														<div>
+															<header>
+																<span class="date">{{ comment.created_date }}</span>
+																<h3>{{ comment.user }}</h3>
+															</header>
+												
+															<p>{{ comment.text|linebreaks }}</p>
+														</div>
+														
+													</article>
+													{% empty %}
+															<p>No comments here yet :(</p>
+														{% endfor %}
+													<a href="#" class="button alt icon solid fa-file-alt">Continue Reading</a>
+												</section>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			<!-- Footer Wrapper -->
+			<div id="footer-wrapper">
+				<footer id="footer" class="container">
+					<div class="row">
+						<div class="col-12">
+							<div id="copyright">
+								<ul class="menu">
+									<li>&copy; HORG. All rights reserved</li>
+									<li>Made For HACKOVID by Prasoon</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</footer>
+			</div>
+			</div>    
+
+	</body>
 {% endblock %}

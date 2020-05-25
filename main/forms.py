@@ -32,7 +32,7 @@ class CommentForm(forms.ModelForm):
 
 class editProfileForm(UserChangeForm):
     password = forms.CharField(disabled=True)
-    role = forms.ModelChoiceField(queryset=Group.objects.all(), widget=forms.Select())
+    role = forms.ModelChoiceField(queryset=Group.objects.all(), widget=forms.Select(), required=False)
 
     class Meta:
         model = User
@@ -55,7 +55,6 @@ class editProfileForm(UserChangeForm):
         role = self.cleaned_data.pop('role')
         u = super().save()
         u.groups.set([role])
-
         return u
 
 
