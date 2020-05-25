@@ -23,7 +23,10 @@ class CommentForm(forms.ModelForm):
 
     widgets = {
         'text': forms.Textarea(attrs={'class': 'input', 'cols': 4, 'rows': 3, 'placeholders': 'Your comment'})
+    }
 
+    labels = {
+        "text": "Review"
     }
 
 
@@ -65,6 +68,10 @@ class ProfileForm(forms.ModelForm):
             'about': forms.Textarea(attrs={'class': 'input', 'placeholders': 'Describe Yourself'}),
         }
 
+        labels = {
+            "images": "Profile Picture"
+        }
+
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
         self.fields['images'].required = False
@@ -82,4 +89,15 @@ class ListForm(forms.ModelForm):
                 attrs={'class': 'input', 'placeholder': 'The name of institution or company'}),
             'noofdays': forms.TextInput(attrs={'class': 'input', 'placeholder': 'Enter the days left to register'}),
 
+        }
+
+        labels = {
+            "name": "Hackathon Name",
+            "category": "Hackathon Category",
+            "image": "Event Image",
+            "WhoIsConducting": "Conducted by",
+            "slug": "Custom Name for Url",
+            "daysLeft": "Registration Open?",
+            "noofdays": "Days left to Register",
+            "question": "Information (in pdf) "
         }
