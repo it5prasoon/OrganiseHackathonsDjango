@@ -21,12 +21,9 @@
         <div class="profile-card">
             <div class="image-container">
                 <div class="inner">
-                    <img src="{{ user.userprofile.images.url }}" alt="{{ list.name }}" style="width:100%">
-                </div>
-                <div class="title">
-                    <center>
-                        <h2><strong>{{ user.first_name }} {{ user.last_name }}</strong></h2>
-                    </center>
+                    {% if object.images %}
+                        <img src="{{ user.userprofile.images.url }}" alt="userImage" style="width:100%">
+                    {% endif %}
                 </div>
             </div>
 
@@ -34,6 +31,7 @@
         <hr class="new5">
         <div class="main-container">
             <ul class="list-group list-group-flush">
+                <li class="list-group-item">Full Name: {{ user.first_name }} {{ user.last_name }} </li>
                 <li class="list-group-item">Username: {{ user }} </li>
                 <li class="list-group-item">Email: {{ user.email }}</li>
                 <li class="list-group-item">Institute: {{ user.userprofile.institute_name }}</li>

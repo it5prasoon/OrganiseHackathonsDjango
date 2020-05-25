@@ -10,6 +10,11 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('first_name', 'last_name', 'email', 'username', 'password1', 'password2')
 
+    def __init__(self, *args, **kwargs):
+        super(SignUpForm, self).__init__(*args, **kwargs)
+        self.fields['first_name'].required = True
+        self.fields['email'].required = True
+
 
 class CommentForm(forms.ModelForm):
     class Meta:
@@ -59,6 +64,11 @@ class ProfileForm(forms.ModelForm):
             'Address': forms.Textarea(attrs={'class': 'input'}),
             'about': forms.Textarea(attrs={'class': 'input', 'placeholders': 'Describe Yourself'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super(ProfileForm, self).__init__(*args, **kwargs)
+        self.fields['images'].required = False
+        self.fields['about'].required = False
 
 
 class ListForm(forms.ModelForm):

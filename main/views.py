@@ -102,8 +102,12 @@ def editProfileView(request):
             user_form = form.save()
             custom_form = profile_form.save(commit=False)
             custom_form.user = user_form
-            custom_form.save()
-            return redirect('profile')
+            try:
+                custom_form.save()
+                return redirect('profile')
+            except ValueError:
+                messages.success(request, "Your role!")
+                pass
 
     else:
         form = editProfileForm(instance=request.user)
@@ -121,7 +125,7 @@ def signinView(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('profile')
+                return redirect('index')
             else:
                 return redirect('signup')
     else:
