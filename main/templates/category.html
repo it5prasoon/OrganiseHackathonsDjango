@@ -18,63 +18,67 @@
     {% block navigation %}
         {% include 'navigation.html' %}
     {% endblock %}
-    <!--Breadcrumb navigation-->
-    {% if category %}
-        <div class="row my_row_class">
-            <div class="mx-auto">
-                <p><a href="{% url 'main:allProdcat' %}">Our list</a> | {{ category.name }}</p>
-            </div>
-        </div>
-    {% endif %}
+	<link rel="stylesheet" href="{% static 'css/main.css' %}"/>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    </head>
+	<body class="right-sidebar is-preload">
+		<div class="jumbotron">
+			<h1>Hackathons Continued!</h1>
+			<p class="text-muted">Here You can explore hackathons conducted by different tech companies.</p>
+			<p class="text-muted">To create your Hackathon - Register as the role of <b>Organiser</b> so that you will get
+				the organise dashboard! </p>
+	
+		</div>
+					<div class="wrapper style3">
+						<div class="inner">
+							<div class="container">
+								<div class="row">
+									<div class="col-12">
+										<!-- Article list -->
+											<section class="box article-list">
+												<h2 class="icon fa-file-alt">Explore Events</h2>
+												<!-- Excerpt -->
+												{% if lists %}
+												{% for list in lists %}
+													<article class="box excerpt">
+														<a href="{{ list.get_url }}" class="image left"><img src="{{ list.image.url }}"
+															alt="{{ list.name }}" style="max-height: 30vh; max-width: 30vh;"/></a>
+														<div>
+															<header>
+																<span class="date">{{ list.created }}</span>
+																<h3><a href="#">{{ list.name }}</a></h3>
+															</header>
+														</div>
+													</article>
+													{% endfor %}
 
-    <div class="mx-auto">
-        {% if category %}
-            <img class="my_image1" src="{{ category.image.url }}" alt="{{ category.name }}">
-            </div>
-            <br>
-            <div>
-                <h1 class="text-center my_title">{{ category.name }}</h1>
-                <p class="text-justify">{{ category.description }}</p>
-            </div>
-        {% endif %}
-    <div class="jumbotron">
-        <h1>Hackathons Continued!</h1>
-        <p class="text-muted">Here You can explore hackathons conducted by different tech companies.</p>
-        <p class="text-muted">To create your Hackathon - Register as the role of <b>Organiser</b> so that you will get
-            the organise dashboard! </p>
+													{% else %}
+														<p><strong>Sorry, there are no hackathon event available!</strong></p>
+													{% endif %}
+											</section>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-    </div>
-    <div class="container">
-        <div class="row mx-auto">
-            {% if lists %}
-                {% for list in lists %}
-                    <div class="my_bottom_margin col-xs-12 col-12 col-sm-6 col-md-6 col-lg-4">
-                        <div class="card shadow text-center" style="min-width: 17rem;">
-                            <div class="inner">
-                                <a href="{{ list.get_url }}"><img class="card-img-top my_image"
-                                                                  src="{{ list.image.url }}"
-                                                                  alt="{{ list.name }}"></a>
-                            </div>
-                            <div class="card-body">
-                                <h4>{{ list.name }}</h4>
-                                <p>
-                                    {% if list.daysLeft == True %}
-                                        <mark>Registration Open</mark>
-                                    {% else %}
-                                        <mark>Registration Closed</mark>
-                                    {% endif %}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-
-            {% else %}
-                <p><strong>Sorry, there are no hackathon event available!</strong></p>
-            {% endif %}
-        </div>
-    </div>
-    {% block footer %}
-        {% include 'footer.html' %}
-    {% endblock %}
-{% endblock %}
+			 <!-- Footer Wrapper -->
+			 <div id="footer-wrapper">
+				<footer id="footer" class="container">
+					<div class="row">
+						<div class="col-12">
+							<div id="copyright">
+								<ul class="menu">
+									<li>&copy; HORG. All rights reserved</li>
+									<li>Made For HACKOVID by Prasoon</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</footer>
+			</div>
+			</div>
+	</body>
+	{% endblock %}

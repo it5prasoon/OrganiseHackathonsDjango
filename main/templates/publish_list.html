@@ -20,9 +20,7 @@
                 {{ form|crispy }}
             </div>
             {% if user.id is not none %}
-                <button type="submit" class="btn btn-danger" data-toggle="button" aria-pressed="false"
-                >Publish Event
-                </button>
+                <button type="submit" class="btn btn-danger">Publish Event</button>
             {% else %}
                 <p class="alert alert-danger" role="alert">You must be logged in to post your event.</p>
             {% endif %}

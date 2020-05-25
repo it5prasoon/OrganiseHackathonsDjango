@@ -25,10 +25,6 @@ class CommentForm(forms.ModelForm):
         'text': forms.Textarea(attrs={'class': 'input', 'cols': 4, 'rows': 3, 'placeholders': 'Your comment'})
     }
 
-    labels = {
-        "text": "Review"
-    }
-
 
 class editProfileForm(UserChangeForm):
     password = forms.CharField(disabled=True)
