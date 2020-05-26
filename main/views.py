@@ -6,9 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.shortcuts import render
 from django.urls import reverse
-from django.utils import timezone
 
-from organisehackathon import settings
 from .forms import SignUpForm, CommentForm, editProfileForm, ProfileForm, ListForm, SendEmail
 from .models import Category, List, Comment
 
