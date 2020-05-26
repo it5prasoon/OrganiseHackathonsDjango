@@ -60,19 +60,23 @@ def register(request):
 
 
 def addcomment(request, id):
-    list = get_object_or_404(List, pk=id)
-    form = CommentForm(request.POST or None)
-    if form.is_valid():
-        data = Comment()
-        data.text = form.cleaned_data['text']
-        print("Redirected.....")
-        current_user = request.user
-        data.user = current_user
-        data.post = list
-        data.user_id = current_user.id
-        data.save()
-        messages.success(request, "Your Comment has been sent. Thank you for your interest.")
-        return HttpResponseRedirect(reverse('main:addcomment', args=[list.id]))
+    if request.method == 'POST':
+        list = get_object_or_404(List, pk=id)
+        form = CommentForm(request.POST or None)
+        if form.is_valid():
+            data = Comment()
+            data.text = form.cleaned_data['text']
+            print("Redirected.....")
+            current_user = request.user
+            data.user = current_user
+            data.post = list
+            data.user_id = current_user.id
+            data.save()
+            messages.success(request, "Your Comment has been sent. Thank you for your interest.")
+            return HttpResponseRedirect(reverse('main:addcomment', args=[list.id]))
+    else:
+        form = CommentForm()
+
     return render(request, 'product.html', {'list': list, 'form': form})
 
 
@@ -92,7 +96,7 @@ def signupView(request):
             return redirect('signin')
     else:
         form = SignUpForm()
-        profile_form = ProfileForm(request.POST, request.FILES)
+        profile_form = ProfileForm()
 
     return render(request, 'accounts/signup.html', {'form': form, 'profile_form': profile_form})
 
@@ -106,12 +110,8 @@ def editProfileView(request):
             user_form = form.save()
             custom_form = profile_form.save(commit=False)
             custom_form.user = user_form
-            try:
-                custom_form.save()
-                return redirect('profile')
-            except ValueError:
-                messages.success(request, "Your role!")
-                pass
+            custom_form.save()
+            return redirect('profile')
 
     else:
         form = editProfileForm(instance=request.user)
@@ -129,7 +129,7 @@ def signinView(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('index')
+                return redirect('profile')
             else:
                 return redirect('signup')
     else:
@@ -166,28 +166,34 @@ def changePassword(request):
 
 def publish(request):
     template = 'publish_list.html'
-    if not request.user.is_authenticated:
-        messages.success(request, "You need to register as organiser first!")
-        return redirect('signup')
-    form = ListForm(request.POST or None, request.FILES)
-    if form.is_valid():
-        instance = form.save(commit=False)
-        instance.user = request.user
-        instance.save()
-        messages.success(request, "Succesfully Published!")
-        return redirect('main:allProdcat')
-
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            messages.success(request, "You need to register as organiser first!")
+            return redirect('signup')
+        form = ListForm(request.POST or None, request.FILES)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            messages.success(request, "Succesfully Published!")
+            return redirect('main:allProdcat')
+    else:
+        form = ListForm()
     return render(request, template, {'list': list, 'form': form})
 
 
 def send_email(request):
-    form = SendEmail(request.POST, request.FILES)
-    if form.is_valid():
-        subject = form.cleaned_data['subject']
-        message = form.cleaned_data['message']
-        from_email = 'horg4dmin@yandex.com'
-        email = form.cleaned_data['email']
-        recipient = [email]
-        send_mail(subject, message, from_email, recipient, fail_silently=True)
-        HttpResponse("Mail Sent...")
+    if request.method == 'POST':
+        form = SendEmail(request.POST, request.FILES)
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+            from_email = 'horg4dmin@yandex.com'
+            email = form.cleaned_data['email']
+            recipient = [email]
+            send_mail(subject, message, from_email, recipient, fail_silently=True)
+            HttpResponse("Mail Sent...")
+    else:
+        form = SendEmail()
+
     return render(request, 'send_email.html', {'form': form})
