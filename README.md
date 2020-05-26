@@ -11,10 +11,10 @@ This is the Web app built using django==3.0.5 framework and python==3.7.1. You c
 3. There is a post comment section in each Event information page where users accross globe can do their conversations.
 4. Users can register, signin, change profile pictures, can change account information like passwords email, username etc.
 5. Only registered users can comment on any event.
+6. Email broadcast for organiser using smtp.google.com [But i have uploaded sendgrid backend which cheated me and sent my account for review its a fun fact]
 
 # TODO
 1. To create notifications app in which users can see the notifications using websocketbridge!
-2. email broadcasting
 
 
 Facts: It was really fun while working on this event. It has cleared many of my confusions about the particular framework. It was not so easy but not much tough.
