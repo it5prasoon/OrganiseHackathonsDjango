@@ -18,3 +18,15 @@ This is the Web app built using django==3.0.5 framework and python==3.7.1. You c
 
 
 Facts: It was really fun while working on this event. It has cleared many of my confusions about the particular framework. It was not so easy but not much tough.
+
+# Tips to run it on your server
+1. Clone the repository 
+2. Change the directory to the repository directory.
+3. Activate the virtual enviornment by going into venv/Scripts and then activate 
+4. Install all the requirements and Run python manage.py makemigrations
+5. python manage.py migrate
+6. For sending email change the settings.py credentials and views.py SendEmail function credentials
+7. after that run python manage.py runserver
+
+
+# best of luck if you encounter any problem do comment or pull an isssue
