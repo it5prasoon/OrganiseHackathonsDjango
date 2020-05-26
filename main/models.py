@@ -86,3 +86,6 @@ def create_profile(sender, instance, created, **kwargs):
         user_profile = UserProfile.objects.create(user=kwargs['instance'])
         user_profile.save()
     post_save.connect(create_profile(sender=User))
+
+
+

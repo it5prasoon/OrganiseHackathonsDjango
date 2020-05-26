@@ -16,7 +16,9 @@ urlpatterns = [
     path('account/profile/password/', views.changePassword, name='changePassword'),
     path('post/publish/', views.publish, name='publish'),
     path('list/register/', views.register, name='register'),
-    path('organiser/', views.organiserView, name='organiserView')
+    path('organiser/', views.organiserView, name='organiserView'),
+    path('send_email/', views.send_email, name='sendEmail')
+
 ]
 
 if settings.DEBUG:

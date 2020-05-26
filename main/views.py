@@ -1,13 +1,15 @@
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
-from django.core.paginator import Paginator
-from django.http import HttpResponseRedirect
+from django.core.mail import send_mail
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils import timezone
 
-from .forms import SignUpForm, CommentForm, editProfileForm, ProfileForm, ListForm
+from organisehackathon import settings
+from .forms import SignUpForm, CommentForm, editProfileForm, ProfileForm, ListForm, SendEmail
 from .models import Category, List, Comment
 
 
@@ -179,3 +181,15 @@ def publish(request):
 
     return render(request, template, {'list': list, 'form': form})
 
+
+def send_email(request):
+    form = SendEmail(request.POST, request.FILES)
+    if form.is_valid():
+        subject = form.cleaned_data['subject']
+        message = form.cleaned_data['message']
+        from_email = 'horg4dmin@yandex.com'
+        email = form.cleaned_data['email']
+        recipient = [email]
+        send_mail(subject, message, from_email, recipient, fail_silently=True)
+        HttpResponse("Mail Sent...")
+    return render(request, 'send_email.html', {'form': form})

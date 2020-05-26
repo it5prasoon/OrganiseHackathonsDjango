@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_filters %}
+{% block content %}
+    <form method="POST" class="post-form form-horizontal" enctype="multipart/form-data">{% csrf_token %}
+    <h3 style="margin-bottom: 20px;color:#a3b745 ">Send Email</h3>
+      <div class="form-group">
+        {{ form.email.errors }}
+        <label class="control-label col-sm-2" for="{{ form.email.id_for_label }}">Email Id</label>
+        <div class="col-sm-5">{{ form.email }}</div>
+        <div class="clear"></div>
+      </div>
+      <div class="form-group">
+        {{ form.subject.errors }}
+        <label class="control-label col-sm-2" for="{{ form.subject.id_for_label }}">Subject</label>
+        <div class="col-sm-5">{{ form.subject }}</div>
+        <div class="clear"></div>
+      </div>
+      <div class="form-group">
+        {{ form.message.errors }}
+        <label class="control-label col-sm-2" for="{{ form.message.id_for_label }}">Message</label>
+        <div class="col-sm-5">{{ form.message}}</div>
+        <div class="clear"></div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2"></label>
+        <div class="col-sm-5"><input class="btn btn-primary" type="submit" name="submit" value="Send Email"></div>
+        <div class="clear"></div>
+      </div>
+</form>
+
+{% endblock %}

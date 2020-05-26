@@ -96,3 +96,13 @@ class ListForm(forms.ModelForm):
             "noofdays": "Days left to Register",
             "question": "Information (in pdf) "
         }
+
+
+class SendEmail(forms.Form):
+    email = forms.EmailField(max_length=200,
+                             widget=forms.TextInput(attrs={'class': "form-control", 'id': "clientemail"}))
+    message = forms.CharField(widget=forms.Textarea(attrs={'class': "form-control"}))
+    subject = forms.CharField(widget=forms.TextInput(attrs={'class': "form-control"}))
+
+    class Meta:
+        fields = ('email', 'subject', 'message',)
