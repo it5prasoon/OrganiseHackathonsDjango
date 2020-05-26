@@ -129,9 +129,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
-SENDGRID_API_KEY = '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'
-SENDGRID_SANDBOX_MODE_IN_DEBUG = False
-SENDGRID_ECHO_TO_STDOUT=True
+# EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+# SENDGRID_API_KEY = 'your_API'
+# SENDGRID_SANDBOX_MODE_IN_DEBUG = False
+# SENDGRID_ECHO_TO_STDOUT=True
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'your_email'
+EMAIL_HOST_PASSWORD = 'your_pass'
+
+
 
 
