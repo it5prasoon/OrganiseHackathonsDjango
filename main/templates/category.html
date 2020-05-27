@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load static %}
+{% block metadescription %}
+    {% if category %}
+        {{ category.description| truncatewords:"155" }}
+    {% else %}
+        Welcome To the site where you can search for hackathons conducting all over country.
+    {% endif %}
+{% endblock %}
+{% block title %}
+    {% if category %}
+        {{ category.name }} - Hackathon List
+    {% else %}
+        See the list.
+    {% endif %}
+{% endblock %}
+{% block content %}
+    {% block navigation %}
+        {% include 'navigation.html' %}
+    {% endblock %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}"/>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    </head>
+    <body class="right-sidebar is-preload">
+    <!-- Header -->
+    <div id="banner">
+        <h2 style="font-size: 1.3rem;"><strong>Explore Events</strong></h2>
+    </div>
+
+    <div class="wrapper style3">
+        <div class="inner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-8 col-lg-8">
+                        <!-- Article list -->
+
+                        <section class="box article-list">
+                            <h2 class="icon fa-file-alt"> Upcoming Events</h2>
+                            {% if lists %}
+                                {% for list in lists %}
+                                    <!-- Excerpt -->
+                                    {% if list.noofdays > 0 %}
+                                        <article class="box excerpt">
+                                            <a href="{{ list.get_url }}" class="image left"><img
+                                                    src="{{ list.image.url }}"
+                                                    alt="{{ list.name }}"
+                                                    style="max-height: 30vh; max-width: 30vh;"/></a>
+                                            <div>
+                                                <header>
+                                                    <span class="date">{{ list.created }}</span>
+                                                    <h3><a href="{{ list.get_url }}">{{ list.name }}</a></h3>
+                                                    <mark>{% if list.noofdays > 0 %} Upcoming Event {% else %} Past
+                                                        Event {% endif %}</mark>
+
+                                                </header>
+                                            </div>
+                                        </article>
+                                    {% endif %}
+                                {% endfor %}
+
+                            {% else %}
+                                <p><strong>Sorry, there are no upcoming hackathon event available!</strong></p>
+                            {% endif %}
+                        </section>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                        <!-- Spotlight -->
+                        <section class="box spotlight">
+                            <h2 class="icon fa-file-alt">Recent Events</h2>
+                            {% if lists %}
+                                {% for list in lists %}
+                                    {% if list.noofdays <= 0 %}
+
+                                        <article class="box excerpt">
+                                            <a href="{{ list.get_url }}" class="image left"><img
+                                                    src="{{ list.image.url }}"
+                                                    alt="{{ list.name }}"
+                                                    style="max-height: 30vh; max-width: 30vh;"/></a>
+                                            <div>
+                                                <header>
+                                                    <span class="date">{{ list.created }}</span>
+                                                    <h3><a href="{{ list.get_url }}">{{ list.name }}</a></h3>
+                                                    <mark>{% if list.noofdays > 0 %} Upcoming Event {% else %} Past
+                                                        Event {% endif %}</mark>
+
+                                                </header>
+                                            </div>
+                                        </article>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+
+                        </section>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Footer Wrapper -->
+    <footer id="footer" class="container">
+        <div class="row">
+            <div class="col-12">
+                <div id="copyright">
+                    <ul class="menu">
+                        <li>&copy; HORG. All rights reserved</li>
+                        <li>Made For HACKOVID by Prasoon</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    </body>
+{% endblock %}
