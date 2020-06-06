@@ -11,7 +11,8 @@ This is the Web app built using django==3.0.5 framework and python==3.7.1. You c
 3. There is a post comment section in each Event information page where users accross globe can do their conversations.
 4. Users can register, signin, change profile pictures, can change account information like password, email, username etc.
 5. Only registered users can comment on any event.
-6. Email broadcast for organiser using smtp.google.com [But i have uploaded sendgrid backend which cheated me and sent my account for review its a fun fact]
+6. Email broadcast for organiser using smtp.google.com. Change the credentials at bottom in settings.py and also in views.py. [But i have also commented sendgrid backend which cheated me and sent my account for review its a fun fact]
+7. It has a section to change password if you forget your username and password through email.
 
 # TODO
 1. To create notifications app in which users can see the notifications using websocketbridge! Fututre will be continued....
